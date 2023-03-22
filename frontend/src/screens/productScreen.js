@@ -2,13 +2,18 @@ import React from "react"
 import { Link, useParams } from "react-router-dom"
 import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap"
 import Review from "../component/review"
-import products from "../products"
 
-export default function ProductScreen() {
-  // using useparams to find the particular product
+export default function ProductScreen({ match }) {
+  const [product, setProduct] = React.useState([])
   const params = useParams()
-  const product = products.find((p) => p._id === params.id)
 
+  React.useEffect(() => {
+    // using params to match the id of the specific product
+
+    fetch(`/api/products/${params.id}`)
+      .then((res) => res.json())
+      .then((data) => setProduct(data))
+  }, [params])
   return (
     <>
       <Link to='/' className='btn btn-dark my-3 rounded'>
@@ -20,7 +25,7 @@ export default function ProductScreen() {
           <Image src={product.image} fluid />
         </Col>
         <Col md={3}>
-          <ListGroup variant="flush">
+          <ListGroup variant='flush'>
             <ListGroup.Item>
               <h3>{product.name}</h3>
             </ListGroup.Item>
@@ -41,7 +46,7 @@ export default function ProductScreen() {
                 <Row>
                   <Col>Price :</Col>
                   <Col>
-                    <strong>{product.price}</strong>
+                    <strong>${product.price}</strong>
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -54,8 +59,8 @@ export default function ProductScreen() {
                 </Row>
               </ListGroup.Item>
               {/* display grid to keep the button in block */}
-              <ListGroup.Item className="d-grid">
-                <Button  type='button' disabled={product.countInStock === 0}>
+              <ListGroup.Item className='d-grid'>
+                <Button type='button' disabled={product.countInStock === 0}>
                   Add To Cart
                 </Button>
               </ListGroup.Item>

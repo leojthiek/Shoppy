@@ -1,9 +1,16 @@
 import React from "react"
 import { Row, Col } from "react-bootstrap"
-import products from "../products"
 import Product from "../component/product"
 
+
 export default function HomeScreen() {
+  const [products,setProducts]=React.useState([])
+
+  React.useEffect(()=>{
+    fetch('/api/products')
+    .then(res => res.json())
+    .then(data => setProducts(data))
+  },[])
   return (
     <div>
       <Row>
