@@ -1,6 +1,6 @@
 const products = [
   {
-    _id: "1",
+  
     name: "Airpod wireless bluetooth Headphones",
     image: "/images/earpod.jpg",
     description:
@@ -13,7 +13,7 @@ const products = [
       numReviews:'4',
   },
   {
-    _id: "2",
+  
     name: " Samsung Wire earphones white",
     image: "/images/wireearphone.jpg",
     description:
@@ -26,7 +26,7 @@ const products = [
       numReviews:'4',
   },
   {
-    _id: "3",
+
     name: "Sony Playstation 4 pro WHite Version ",
     image: "/images/playstation.jpg",
     description:
@@ -39,7 +39,7 @@ const products = [
       numReviews:'4',
   },
   {
-    _id: "4",
+
     name: "iPhone 11 pro 256GB memory",
     image: "/images/iphone.jpg",
     description:
@@ -52,7 +52,7 @@ const products = [
       numReviews:'4',
   },
   {
-    _id: "5",
+
     name: "Cannon EOS 80D DSLR Camera",
     image: "/images/canon.jpg",
     description:
