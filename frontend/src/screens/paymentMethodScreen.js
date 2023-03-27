@@ -16,11 +16,11 @@ export default function PaymentMethodScreen() {
     navigate("/login/shipping")
   }
 
-  const [paymentMethod, setPaymentMethod] = React.useState("paypal")
+  const [paymentMethod, setPaymentMethod] = React.useState('')
 
   function handleSubmit(e) {
     e.preventDefault()
-    dispatch(savePaymentMethod({ paymentMethod }))
+    dispatch(savePaymentMethod(paymentMethod))
     navigate("/placeorder")
   }
 
@@ -37,10 +37,10 @@ export default function PaymentMethodScreen() {
           <Col>
             <Form.Check
               type='radio'
-              label='paypal or creditcard'
+              label='PayPal or creditcard'
               id='paypal'
               value='paypal'
-              checked
+              name="paymentMethod"
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
              <Form.Check
@@ -48,7 +48,7 @@ export default function PaymentMethodScreen() {
               label='Stripe'
               id='stripe'
               value='stripe'
-              checked
+              name="paymentMethod"    
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
           </Col>
