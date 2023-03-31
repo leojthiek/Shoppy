@@ -11,6 +11,10 @@ import ShippingScreen from "./screens/shippingScreen"
 import PaymentMethodScreen from "./screens/paymentMethodScreen"
 import ProfileScreen from "./screens/profileScreen"
 import PlaceOrderScreen from "./screens/PlaceOrderScreen"
+import OrderScreen from "./screens/orderScreen"
+import UserListScreen from "./screens/UserListScreen"
+
+
 function App() {
   return (
     <>
@@ -18,6 +22,7 @@ function App() {
       <main className='py-4'>
         <Container>
           <Routes>
+            <Route path="/order/:id" Component={OrderScreen}/>
             <Route path="/placeorder" Component={PlaceOrderScreen}/>
             <Route path='/payment' Component={PaymentMethodScreen} />
             <Route path='/login/shipping' Component={ShippingScreen} />
@@ -26,6 +31,7 @@ function App() {
             <Route path='/profile' Component={ProfileScreen}/>
             <Route path='/product/:id' Component={ProductScreen} />
             <Route path='/cart/:id?' Component={CartScreen} />
+            <Route path="/admin/userlist" Component={UserListScreen}/>
             <Route path='/' Component={HomeScreen} exact />
 
 

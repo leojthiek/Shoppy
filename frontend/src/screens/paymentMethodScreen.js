@@ -37,9 +37,9 @@ export default function PaymentMethodScreen() {
           <Col>
             <Form.Check
               type='radio'
-              label='PayPal or creditcard'
-              id='paypal'
-              value='paypal'
+              label='Razorpay'
+              id='Razorpay'
+              value='Razorpay'
               name="paymentMethod"
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>

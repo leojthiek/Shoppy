@@ -1,12 +1,17 @@
 import React from "react"
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import Message from "../component/message"
 import CheckoutSteps from "../component/checkoutSteps"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { orderCreateAction } from "../redux/action/orderAction"
 
 export default function PlaceOrderScreen() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const cart = useSelector((state) => state.cart)
+
 
   function addDecimal(num) {
     return (Math.round(num * 100) / 100).toFixed(2)
@@ -21,11 +26,33 @@ export default function PlaceOrderScreen() {
   cart.taxPrice = addDecimal(0.15 * cart.itemPrice)
 
   cart.totalPrice =
-    Number(cart.itemPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
+   addDecimal(Number(cart.itemPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice))
 
-  const handleSubmit = () => {
-    console.log("ofd")
+  const orderCreate = useSelector((state) => state.orderCreate)
+  const { order, error, success } = orderCreate
+
+React.useEffect(()=>{
+  if(success){
+    navigate(`/order/${order._id}`)
   }
+},[navigate,order,success])
+
+
+ 
+  const handleSubmit = () => {
+    dispatch(
+      orderCreateAction({
+        orderItem: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemPrice: cart.itemPrice,
+        shippingPrice: cart.shippingPrice,
+        totalPrice: cart.totalPrice,
+        taxPrice: cart.taxPrice,
+      })
+    )
+  }
+
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 />
@@ -114,6 +141,10 @@ export default function PlaceOrderScreen() {
                   <Col>Total</Col>
                   <Col>${cart.totalPrice}</Col>
                 </Row>
+              </ListGroup.Item>
+
+              <ListGroup.Item>
+                {error && <Message variant='danger'>{error}</Message>}
               </ListGroup.Item>
 
               <ListGroup.Item className='d-grid'>

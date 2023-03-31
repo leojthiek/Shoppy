@@ -1,22 +1,22 @@
 import React from "react"
 import { Form, Button } from "react-bootstrap"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import FormContainer from "../component/formContainer"
 import { saveShippingAddress } from "../redux/action/cartAction"
 import CheckOutSteps from "../component/checkoutSteps" 
 
 export default function ShippingScreen() {
-   const cart=useSelector(state => state.cart)
-   const {shippingAddress}=cart
+  //  const cart=useSelector(state => state.cart)
+  //  const {shippingAddress}=cart
    const dispatch=useDispatch()
    const navigate=useNavigate()
 
 
-  const [address, setAddress] = React.useState(shippingAddress.address)
-  const [city, setCity] = React.useState(shippingAddress.city)
-  const [postalCode, setPostalCode] = React.useState(shippingAddress.postalCode)
-  const [country, setCountry] = React.useState(shippingAddress.country)
+  const [address, setAddress] = React.useState('')
+  const [city, setCity] = React.useState('')
+  const [postalCode, setPostalCode] = React.useState('')
+  const [country, setCountry] = React.useState('')
 
 
   function handleSubmit(e){

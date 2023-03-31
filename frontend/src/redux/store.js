@@ -15,7 +15,11 @@ import {
   userRegisterReducer,
   userDetailsReducer,
   userProfileUpdateReducer,
+  userListReducer,
+  userDeleteReducer,
 } from "./reducers/userReducer"
+
+import { orderCreateReducers , orderDetailsReducer,orderPayReducer,orderListMyReducer} from "./reducers/orderReducer"
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))
@@ -45,6 +49,12 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdate: userProfileUpdateReducer,
+  userList:userListReducer,
+  userDelete:userDeleteReducer,
+  orderCreate:orderCreateReducers,
+  orderDetails:orderDetailsReducer,
+  orderPay:orderPayReducer,
+  orderListMy:orderListMyReducer,
 })
 const middleware = [thunk]
 
