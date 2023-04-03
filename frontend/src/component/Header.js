@@ -1,17 +1,21 @@
 import React from "react"
 import { Nav, Navbar, Container, NavDropdown } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
+import { useNavigate } from "react-router-dom"
 import {useDispatch,useSelector} from 'react-redux'
 import { logout } from "../redux/action/userAction"
+import SearchBox from "./SearchBox"
 
 
 export default function Header() {
   const dispatch=useDispatch()
+  const navigate=useNavigate()
   const userLogin=useSelector(state=> state.userLogin)
   const {userInfo}=userLogin
 
 const logoutHandler=()=>{
   dispatch(logout())
+  navigate('/login')
 
 }
 
@@ -25,6 +29,7 @@ const logoutHandler=()=>{
 
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
+            <SearchBox/>
             <Nav className='navlist-header'>
 
               <LinkContainer to='/cart'>

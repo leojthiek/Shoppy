@@ -1,10 +1,21 @@
 import React from "react"
 import { Link, useParams } from "react-router-dom"
-import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap"
+import {
+  Button,
+  Row,
+  Col,
+  ListGroup,
+  Image,
+  Card,
+} from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../component/message"
 import Loader from "../component/loader"
-import { orderDetailsAction } from "../redux/action/orderAction"
+import {
+  orderDetailsAction,
+  orderDeliverAction,
+} from "../redux/action/orderAction"
+import { ORDER_DELIVER_RESET } from "../redux/constant/orderConstant"
 
 export default function OrderScreen() {
   const params = useParams()
@@ -13,13 +24,24 @@ export default function OrderScreen() {
 
   const cart = useSelector((state) => state.cart)
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
 
+  const orderDeliver = useSelector((state) => state.orderDeliver)
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+
+
   React.useEffect(() => {
-    dispatch(orderDetailsAction(orderId))
-    // dispatch(orderToPayAction(orderId))
-  }, [dispatch, orderId])
+    if (!order || successDeliver) {
+      dispatch(orderDetailsAction(orderId))
+      dispatch({ type: ORDER_DELIVER_RESET })
+    }
+   
+  }, [dispatch, orderId,order,successDeliver])
+
 
   function addDecimal(num) {
     return Math.round((num * 100) / 100).toFixed(2)
@@ -27,6 +49,10 @@ export default function OrderScreen() {
   const itemPrice = addDecimal(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   )
+
+  const deliverhandler = () => {
+    dispatch(orderDeliverAction(order))
+  }
 
   async function handlePay(e) {
     e.preventDefault()
@@ -85,7 +111,7 @@ export default function OrderScreen() {
                 {order.shippingAddress.country},
               </p>
               {order.isDelivered ? (
-                <Message variant='success'>paid On {order.deliveredAt}</Message>
+               <Message variant='success'>{order.deliveredAt}</Message>
               ) : (
                 <Message variant='danger'>Not Delivered</Message>
               )}
@@ -98,7 +124,7 @@ export default function OrderScreen() {
                 {order.paymentMethod}
               </p>
               {order.isPaid ? (
-                <Message variant='success'>paid On {order.paidAt}</Message>
+                <Message variant='success'>Paid</Message>
               ) : (
                 <Message variant='danger'>Not Paid</Message>
               )}
@@ -174,8 +200,21 @@ export default function OrderScreen() {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item className='d-grid'>
-                <Button onClick={handlePay}>Proceed to payment</Button>
+                {!order.isPaid ?  <Button onClick={handlePay}>Proceed to payment</Button> : ''}
+               
               </ListGroup.Item>
+
+              {loadingDeliver && <Loader/>}
+              { userInfo && userInfo.isAdmin&& order.isPaid && !order.isDelivered && (
+                <ListGroup.Item className="d-grid">
+                  <Button
+                    type='button'
+                    onClick={deliverhandler}
+                  >
+                    Mark as Delivered
+                  </Button>
+                </ListGroup.Item>
+              )}
             </ListGroup>
           </Card>
         </Col>

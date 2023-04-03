@@ -36,11 +36,10 @@ const getOrderById = asyncHandler(async (req, res) => {
     "user",
     "name email"
   )
-  
-    if(order){
-   res.json(order)
-    }
-   else {
+
+  if (order) {
+    res.json(order)
+  } else {
     res.status(400)
     throw new Error("order not found")
   }
@@ -69,12 +68,41 @@ const updateOrderToPay = asyncHandler(async (req, res) => {
 //  get logged in user order
 
 const getMyOrder = asyncHandler(async (req, res) => {
-  const orders = await Order.find({user:req.user._id})
+  const orders = await Order.find({ user: req.user._id })
 
   res.json(orders)
 })
 
+//@desc    Get all orders
+//Routes   /orders
+// access   Private/admin
 
+const getAllOrder = asyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate("user", "id name")
 
+  res.json(orders)
+})
 
-export { updateOrderToPay ,getOrderById,addOrderItems,getMyOrder}
+const updateOrderToDelivered = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+
+  if (order) {
+    order.isDelivered=true
+    order.paidAt=Date.now()
+    
+    const updatedOrder = await Order.save()
+    res.json(updatedOrder)
+  } else {
+    res.status(400)
+    throw new Error("order not found")
+  }
+})
+
+export {
+  updateOrderToPay,
+  getOrderById,
+  addOrderItems,
+  getMyOrder,
+  getAllOrder,
+  updateOrderToDelivered,
+}

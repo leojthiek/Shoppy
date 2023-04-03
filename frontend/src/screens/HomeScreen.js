@@ -1,19 +1,24 @@
 import React from "react"
 import { Row, Col } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
 import Product from "../component/product"
-import { productListAction } from "../redux/action/productListActiion"
+import { productListAction } from "../redux/action/ProductAction"
 import Loader from "../component/loader"
 import Message from "../component/message"
 
 export default function HomeScreen() {
   const dispatch = useDispatch()
+  const params=useParams()
+
+  const keyword=params.keyword
+
   const productList = useSelector((state) => state.productList)
   const { error, loading, products } = productList
 
   React.useEffect(() => {
-    dispatch(productListAction())
-  }, [dispatch])
+    dispatch(productListAction(keyword))
+  }, [dispatch,keyword])
 
   return (
     <div>

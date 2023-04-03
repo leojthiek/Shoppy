@@ -44,3 +44,99 @@ export const productDetailsReducer = (state = { product:{reviews:[]}}, action) =
   }
 }
 
+export const deleteProductReducer = (state = {}, action) => {
+  switch (action.type) {
+    case constant.PRODUCT_DELETE_REQUEST:
+      return {
+        loading: true,
+      }
+    case constant.PRODUCT_DELETE_SUCCESS:
+      return {
+        loading: false,
+        success:true,
+      }
+    case constant.PRODUCT_DELETE_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export const ProductCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case constant.PRODUCT_CREATE_REQUEST:
+      return {
+        loading: true,
+      }
+    case constant.PRODUCT_CREATE_SUCCESS:
+      return {
+        loading: false,
+        success:true,
+        product:action.payload
+      }
+    case constant.PRODUCT_CREATE_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+      case constant.PRODUCT_CREATE_RESET:
+        return {}
+    default:
+      return state
+  }
+}
+
+export const productUpdateReducer = (state = {product:{}}, action) => {
+  switch (action.type) {
+    case constant.PRODUCT_UPDATE_REQUEST:
+      return {
+        loading: true,
+      }
+    case constant.PRODUCT_UPDATE_SUCCESS:
+      return {
+        loading: false,
+        success:true,
+        product:action.payload
+      }
+    case constant.PRODUCT_UPDATE_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+      case constant.PRODUCT_UPDATE_RESET:
+        return {
+          product:{}
+        }
+    default:
+      return state
+  }
+}
+
+export const productReviewsCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case constant.PRODUCT_CREATE_REVIEWS_REQUEST:
+      return {
+        loading: true,
+      }
+    case constant.PRODUCT_CREATE_REVIEWS_SUCCESS:
+      return {
+        loading: false,
+        success:true,
+       
+      }
+    case constant.PRODUCT_CREATE_REVIEWS_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+      case constant.PRODUCT_CREATE_REVIEWS_RESET:
+        return {}
+        
+    default:
+      return state
+  }
+}
+

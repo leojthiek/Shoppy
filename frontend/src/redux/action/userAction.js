@@ -206,3 +206,34 @@ export const userDeleteAction = (id) => async (dispatch, getState) => {
     })
   }
 }
+
+export const userUpdateAction = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: constant.USER_EDIT_REQUEST,
+    })
+    const {
+      userLogin: { userInfo },
+    } = getState()
+    const config = {
+      headers: {
+        'Content-Type':'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+  const {data}= await axios.put(`/users/${user._id}`,user, config)
+
+    dispatch({
+      type: constant.USER_EDIT_SUCCESS,
+    })
+    dispatch({type:constant.USER_DETAILS_SUCCESS,payload:data})
+  } catch (error) {
+    dispatch({
+      type: constant.USER_EDIT_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}

@@ -8,6 +8,10 @@ import { composeWithDevTools } from "@redux-devtools/extension"
 import {
   productListReducer,
   productDetailsReducer,
+  deleteProductReducer,
+  ProductCreateReducer,
+  productUpdateReducer,
+  productReviewsCreateReducer,
 } from "./reducers/productReducer"
 import { cartReducer } from "./reducers/cartReducer"
 import {
@@ -17,9 +21,10 @@ import {
   userProfileUpdateReducer,
   userListReducer,
   userDeleteReducer,
+  userUpdateReducer
 } from "./reducers/userReducer"
 
-import { orderCreateReducers , orderDetailsReducer,orderPayReducer,orderListMyReducer} from "./reducers/orderReducer"
+import { orderCreateReducers , orderDetailsReducer,orderPayReducer,orderListMyReducer,allOrdersReducer,orderDeliverReducer} from "./reducers/orderReducer"
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))
@@ -44,6 +49,10 @@ const initialState = {
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
+  productDelete:deleteProductReducer,
+  productCreate:ProductCreateReducer,
+  productUpdate:productUpdateReducer,
+  productReviewsCreate:productReviewsCreateReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
@@ -51,10 +60,14 @@ const reducer = combineReducers({
   userUpdate: userProfileUpdateReducer,
   userList:userListReducer,
   userDelete:userDeleteReducer,
+  userEdit:userUpdateReducer,
   orderCreate:orderCreateReducers,
   orderDetails:orderDetailsReducer,
   orderPay:orderPayReducer,
   orderListMy:orderListMyReducer,
+  allOrders:allOrdersReducer,
+  orderDeliver:orderDeliverReducer,
+
 })
 const middleware = [thunk]
 
