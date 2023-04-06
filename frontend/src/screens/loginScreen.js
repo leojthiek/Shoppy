@@ -21,6 +21,8 @@ export default function LoginScreen({history}) {
   React.useEffect(()=>{
      if(userInfo){
        navigate(redirect)
+     }else{
+      setPassword('')
      }
   },[navigate,redirect,userInfo])
 
@@ -34,7 +36,7 @@ export default function LoginScreen({history}) {
       <h1>Sign In</h1>
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader/>}
-      <Form onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler}autoComplete='off' >
         <Form.Group controlId='email'>
           <Form.Label>Email Address</Form.Label>
           <Form.Control

@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, useParams, useNavigate } from "react-router-dom"
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, Image } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../component/message"
 import Loader from "../component/loader"
@@ -25,6 +25,7 @@ export default function ProductEditScreen() {
   const [description, setDescription] = React.useState("")
   const [countInStock, setCountInStock] = React.useState(0)
 
+  
   const productDetails = useSelector((state) => state.productDetails)
   const { product, loading, error } = productDetails
 
@@ -83,13 +84,31 @@ export default function ProductEditScreen() {
     )
   }
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0]
+    TransformFile(file)
+  }
+
+  const TransformFile = (file) => {
+    const reader = new FileReader()
+
+    if (file) {
+      reader.readAsDataURL(file)
+      reader.onloadend = () => {
+        setImage(reader.result)
+      }
+    } else {
+      setImage("")
+    }
+  }
+
   return (
     <>
       <Link to='/admin/productlist' className='btn btn-light my-3'>
         Go Back
       </Link>
       <FormContainer>
-        <h1>Edit User</h1>
+        <h1>Edit Product</h1>
         {loadingupdate && <Loader />}
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
@@ -141,11 +160,15 @@ export default function ProductEditScreen() {
             <Form.Group controlId='image'>
               <Form.Label>Product Image</Form.Label>
               <Form.Control
-                type='text'
+                type='file'
+                accept="image/"
                 placeholder='Upload an Image'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                onChange={handleImageUpload}
               ></Form.Control>
+            </Form.Group>
+
+            <Form.Group>
+              <Image className="preview-image" src={image && image}/>
             </Form.Group>
 
             <Form.Group controlId='description'>

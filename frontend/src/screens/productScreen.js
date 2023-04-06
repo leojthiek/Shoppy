@@ -50,6 +50,7 @@ export default function ProductScreen() {
         comment,
       })
     )
+    
     setComment('')
     setRating(0)
   }
@@ -68,7 +69,7 @@ export default function ProductScreen() {
           <Row>
             <Col md={6}>
               {/* fluid to force image to stay inside column */}
-              <Image src={product.image} fluid />
+            {product.image && <Image src={product.image.url}fluid />}
             </Col>
 
             <Col md={3}>
@@ -82,9 +83,9 @@ export default function ProductScreen() {
                     text={`${product.numReviews} reviews`}
                   />
                 </ListGroup.Item>
-                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+                <ListGroup.Item>Price: Rs-{product.price}</ListGroup.Item>
                 <ListGroup.Item>
-                  Description: ${product.description}
+                  Description: {product.description}
                 </ListGroup.Item>
               </ListGroup>
             </Col>
@@ -96,7 +97,7 @@ export default function ProductScreen() {
                     <Row>
                       <Col>Price :</Col>
                       <Col>
-                        <strong>${product.price}</strong>
+                        <strong>Rs-{product.price}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>

@@ -85,7 +85,7 @@ React.useEffect(()=>{
                       <Row>
                         <Col md={1}>
                           <Image
-                            src={item.image}
+                            src={item.image.url}
                             alt={item.name}
                             fluid
                             rounded
@@ -97,7 +97,7 @@ React.useEffect(()=>{
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x ${item.price} = ${" "}
+                          {item.qty} x Rs-{item.price} = Rs-{" "}
                           {addDecimal(`${item.qty * item.price}`)}
                         </Col>
                       </Row>
@@ -118,28 +118,28 @@ React.useEffect(()=>{
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${cart.itemPrice}</Col>
+                  <Col>Rs-{cart.itemPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping Price</Col>
-                  <Col>${cart.shippingPrice}</Col>
+                  <Col>Rs-{cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item>
                 <Row>
                   <Col>Tax</Col>
-                  <Col>${cart.taxPrice}</Col>
+                  <Col>Rs-{cart.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col>${cart.totalPrice}</Col>
+                  <Col>Rs-{cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
 

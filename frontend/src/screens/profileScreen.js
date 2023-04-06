@@ -10,6 +10,7 @@ import {
   updateUserProfileAction,
 } from "../redux/action/userAction"
 import { listMyOrderAction } from "../redux/action/orderAction"
+import { USER_UPDATE_PROFILE_RESET } from "../redux/constant/userConstant"
 
 export default function ProfileScreen() {
   const [name, setName] = React.useState("")
@@ -37,6 +38,7 @@ export default function ProfileScreen() {
       navigate("/login")
     } else {
       if (!user.name) {
+        dispatch({type:USER_UPDATE_PROFILE_RESET})
         dispatch(userDetailsAction("profile"))
         dispatch(listMyOrderAction())
       } else {
@@ -44,7 +46,7 @@ export default function ProfileScreen() {
         setEmail(user.email)
       }
     }
-  }, [navigate, userInfo, dispatch, user])
+  }, [navigate, userInfo, dispatch, user],success)
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -145,7 +147,7 @@ export default function ProfileScreen() {
                     )}
                   </td>
                   <td>
-                    <LinkContainer to={`orders/${order._id}`}>
+                    <LinkContainer to={`/order/${order._id}`}>
                       <Button variant='light' className='btn-sm'>
                         Details
                       </Button>

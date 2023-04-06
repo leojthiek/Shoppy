@@ -18,16 +18,18 @@ export default function AllOrderListScreen() {
   const { userInfo } = userLogin
 
   React.useEffect(() => {
+
     if (userInfo && userInfo.isAdmin) {
       dispatch(allOrderListAction())
     } else {
       navigate("/login")
     }
+
   }, [dispatch, navigate, userInfo])
 
   return (
     <>
-      <h1>Users</h1>
+      <h1>Orders</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -64,7 +66,7 @@ export default function AllOrderListScreen() {
 
                 <td>
                   {order.isDelivered ? (
-                    order.isDeliveredAt?.substring(0, 10)
+                    <i className="fas fa-check"/>
                   ) : (
                     <i className='fas fa-times' style={{ color: "red" }}></i>
                   )}
@@ -72,7 +74,9 @@ export default function AllOrderListScreen() {
                 <td>
                   <LinkContainer to={`/order/${order._id}`}>
                     <Button variant='light' className='btn-sm'>
+                      
                       Details
+                      
                     </Button>
                   </LinkContainer>
                 </td>

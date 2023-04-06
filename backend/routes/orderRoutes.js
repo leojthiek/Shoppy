@@ -9,8 +9,8 @@ const router=express.Router()
 router.route('/').post(protect,addOrderItems).get(protect,admin,getAllOrder)
 router.route('/myorders').get(protect, getMyOrder)
 router.route('/:id').get(protect,getOrderById)
-router.route('/:id/pay').put(protect,updateOrderToPay)
-router.route('/:id/deliver').put(admin,protect,updateOrderToDelivered)
+router.route('/razorpay/success/:id').put(protect,updateOrderToPay)
+router.route('/:id/deliver').put(protect,admin,updateOrderToDelivered)
 
 
 

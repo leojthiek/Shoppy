@@ -12,6 +12,7 @@ import {
   ProductCreateReducer,
   productUpdateReducer,
   productReviewsCreateReducer,
+  productTopRatedReducer,
 } from "./reducers/productReducer"
 import { cartReducer } from "./reducers/cartReducer"
 import {
@@ -53,6 +54,7 @@ const reducer = combineReducers({
   productCreate:ProductCreateReducer,
   productUpdate:productUpdateReducer,
   productReviewsCreate:productReviewsCreateReducer,
+  productTopRated:productTopRatedReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
@@ -67,6 +69,7 @@ const reducer = combineReducers({
   orderListMy:orderListMyReducer,
   allOrders:allOrdersReducer,
   orderDeliver:orderDeliverReducer,
+  
 
 })
 const middleware = [thunk]

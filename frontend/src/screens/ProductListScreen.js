@@ -2,9 +2,10 @@ import React from "react"
 import { Row, Col, Button, Table } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Message from "../component/message"
 import Loader from "../component/loader"
+import Paginate from "../component/paginate"
 import {
   productListAction,
   deleteProductAction,
@@ -13,11 +14,14 @@ import {
 import { PRODUCT_CREATE_RESET } from "../redux/constant/productListConstant"
 
 export default function ProductListScreen() {
+  const params = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const pageNumber = params.pageNumber
+
   const productList = useSelector((state) => state.productList)
-  const { products, error, loading } = productList
+  const { products, error, loading, pages, page } = productList
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -37,26 +41,26 @@ export default function ProductListScreen() {
     product: createdProduct,
   } = productCreate
 
-
-
   React.useEffect(() => {
-    dispatch({type:PRODUCT_CREATE_RESET})
+    dispatch({ type: PRODUCT_CREATE_RESET })
 
-    if(!userInfo || !userInfo.isAdmin){
-      navigate('/login')
+    if (!userInfo || !userInfo.isAdmin) {
+      navigate("/login")
     }
-    if(createSuccess){
+    if (createSuccess) {
       navigate(`/admin/product/${createdProduct._id}/edit`)
-    }else{
-      dispatch(productListAction())
+    } else {
+      dispatch(productListAction("", pageNumber))
     }
-    
-  },[successDelete,
+  }, [
+    successDelete,
     dispatch,
     userInfo,
     createSuccess,
     createdProduct,
-    navigate,])
+    navigate,
+    pageNumber,
+  ])
 
   const handleDelete = (id) => {
     if (window.confirm("Do you want to delete this product completely")) {
@@ -67,7 +71,6 @@ export default function ProductListScreen() {
   const createProducthandler = () => {
     dispatch(productCreateAction())
   }
-   
 
   return (
     <>
@@ -90,48 +93,51 @@ export default function ProductListScreen() {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Table striped bordered hover responsive className='table-sm'>
-          <thead>
-            <tr>
-              <td>ID</td>
-              <td>NAME</td>
-              <td>PRICE</td>
-              <td>CATEGORY</td>
-              <td>BRAND</td>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product._id}>
-                <td>{product._id}</td>
-                <td>{product.name}</td>
-                <td>Rs,{product.price}</td>
-
-                <td>{product.category}</td>
-
-                <td>{product.brand}</td>
-                <td>
-                  <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                    <Button
-                      variant='light'
-                      className='btn-sm'
-                      style={{ color: "black" }}
-                    >
-                      <i className='fas fa-edit'></i>
-                    </Button>
-                  </LinkContainer>
-                  <Button
-                    variant='danger'
-                    className='btn-sm'
-                    onClick={() => handleDelete(product._id)}
-                  >
-                    <i className='fas fa-trash'></i>
-                  </Button>
-                </td>
+        <>
+          <Table striped bordered hover responsive className='table-sm'>
+            <thead>
+              <tr>
+                <td>ID</td>
+                <td>NAME</td>
+                <td>PRICE</td>
+                <td>CATEGORY</td>
+                <td>BRAND</td>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr key={product._id}>
+                  <td>{product._id}</td>
+                  <td>{product.name}</td>
+                  <td>Rs,{product.price}</td>
+
+                  <td>{product.category}</td>
+
+                  <td>{product.brand}</td>
+                  <td>
+                    <LinkContainer to={`/admin/product/${product._id}/edit`}>
+                      <Button
+                        variant='light'
+                        className='btn-sm'
+                        style={{ color: "black" }}
+                      >
+                        <i className='fas fa-edit'></i>
+                      </Button>
+                    </LinkContainer>
+                    <Button
+                      variant='danger'
+                      className='btn-sm'
+                      onClick={() => handleDelete(product._id)}
+                    >
+                      <i className='fas fa-trash'></i>
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Paginate pages={pages} page={page} isAdmin={true}/>
+        </>
       )}
     </>
   )

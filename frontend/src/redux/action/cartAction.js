@@ -24,7 +24,7 @@ export const cartRemoveAction=(id)=>(dispatch,getState)=>{
         type:constant.CARD_REMOVE_ITEM,
         payload:id
     })
-    localStorage.getItem('cartItems',JSON.stringify(getState().cart.cartItems))
+    localStorage.removeItem('cartItems',JSON.stringify(getState().cart.cartItems))
 }
 
 export const saveShippingAddress=(data)=>(dispatch)=>{

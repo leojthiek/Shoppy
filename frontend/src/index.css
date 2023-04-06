@@ -10,6 +10,10 @@ main{
   padding: 1rem 0;
 
 }
+.product-image{
+  height: 200px;
+  padding: 10px;
+}
 h3{
   padding: 1.5rem 0;
 }
@@ -27,3 +31,31 @@ h2{
 .payment-btn{
   margin-top: 10px;
 }
+.preview-image{
+  width:70px; 
+}
+.box{
+  width: full;
+  height: 400px;
+  background-color: rgb(42, 35, 35);
+
+}
+.crousel{
+  background-color: rgb(23, 20, 20);
+}
+.crousel-image{
+  height: 400px;
+  width: 1300px;
+  object-fit: cover;
+
+}
+.crousel-empty-div{
+  height: 100px;
+  background: linear-gradient(to top,rgb(13, 13, 13),rgb(228, 221, 221));
+}
+@media (max-width:767px){
+  .crousel-text{
+    font-size: 10px;
+  }
+}
+

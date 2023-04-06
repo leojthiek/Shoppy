@@ -47,22 +47,19 @@ const getOrderById = asyncHandler(async (req, res) => {
 
 const updateOrderToPay = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
-
-  if (order) {
-    ;(order.isPaid = true),
-      (order.paidAt = Date.now()),
-      (order.paymentResult = {
-        id: req.body.id,
-        status: req.body.status,
-        update_time: req.body.update_time,
-        email_address: req.body.payer.email_address,
-      })
-    const updatedOrder = await Order.save()
-    res.json(updatedOrder)
-  } else {
+  if(order){
+    order.isPaid=true,
+    order.paidAt=Date.now()
+  
+    await order.save();
+    res.status(200).json('Payment Success')
+  }else{
     res.status(400)
-    throw new Error("order not found")
+    throw new Error('Transaction Failed')
   }
+ 
+  
+    
 })
 
 //  get logged in user order
@@ -83,14 +80,18 @@ const getAllOrder = asyncHandler(async (req, res) => {
   res.json(orders)
 })
 
+//@desc    update order to deliver
+//routes   orders/:id/deliver
+//access   private/admin
+
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
 
   if (order) {
     order.isDelivered=true
-    order.paidAt=Date.now()
+    order.deliveredAt=Date.now()
     
-    const updatedOrder = await Order.save()
+    const updatedOrder = await order.save()
     res.json(updatedOrder)
   } else {
     res.status(400)
