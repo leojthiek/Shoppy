@@ -52,10 +52,10 @@ export default function RegisterScreen() {
           ></Form.Control>
         </Form.Group>
         <Form.Group controlId='email'>
-          <Form.Label>name Address</Form.Label>
+          <Form.Label>Email Address</Form.Label>
           <Form.Control
-            type='emil'
-            placeholder='Enter emil'
+            type='email'
+            placeholder='Enter email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>

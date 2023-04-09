@@ -46,7 +46,7 @@ export default function ProfileScreen() {
         setEmail(user.email)
       }
     }
-  }, [navigate, userInfo, dispatch, user],success)
+  }, [navigate, userInfo, dispatch, user,success])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -137,14 +137,10 @@ export default function ProfileScreen() {
                   <td>{order.createdAt.substring(0, 10)}</td>
                   <td>{order.totalPrice}</td>
                   <td>
-                    {order.ispaid ? order.PaidAt.substring(0, 10) : <p>No</p>}
+                    {order.isPaid ? (order.paidAt ? order.paidAt.substring(0, 10) : 'N/A') : <p>No</p>}
                   </td>
                   <td>
-                    {order.isDelivered ? (
-                      order.isDeliveredAt.substring(0, 10)
-                    ) : (
-                      <p>No</p>
-                    )}
+                   {order.isDelivered ? (order.deliveredAt ? order.deliveredAt.substring(0,10): 'N/A'):<p>No</p>}
                   </td>
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>

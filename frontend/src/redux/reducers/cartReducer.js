@@ -2,7 +2,7 @@ import * as constant from "../constant/cartConstant"
 
 export const cartReducer = (state = { cartItems: [] , shippingAddress:{}}, action) => {
   switch (action.type) {
-    case constant.CARD_ADD_ITEM:
+    case constant.CART_ADD_ITEM:
       const items = action.payload
 
       const existsItem = state.cartItems.find(
@@ -22,7 +22,7 @@ export const cartReducer = (state = { cartItems: [] , shippingAddress:{}}, actio
           cartItems: [...state.cartItems, items],
         }
       }
-      case constant.CARD_REMOVE_ITEM:
+      case constant.CART_REMOVE_ITEM:
         return{
           ...state,
           cartItems: state.cartItems.filter(x=> x.product !== action.payload)

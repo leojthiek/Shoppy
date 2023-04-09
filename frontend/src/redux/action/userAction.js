@@ -38,11 +38,12 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: constant.USER_LOGOUT,
   })
-  dispatch({
-    type: MYORDER_LIST_RESET,
-  })
+ 
   dispatch({
     type: constant.USER_DETAILS_RESET,
+  })
+  dispatch({
+    type: MYORDER_LIST_RESET,
   })
   dispatch({ type: constant.USER_LIST_RESET })
 }
