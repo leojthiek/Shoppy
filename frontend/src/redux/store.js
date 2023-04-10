@@ -27,9 +27,9 @@ import {
 
 import { orderCreateReducers , orderDetailsReducer,orderPayReducer,orderListMyReducer,allOrdersReducer,orderDeliverReducer} from "./reducers/orderReducer"
 
-const cartItemsFromStorage = localStorage.getItem("cartItems")
-  ? JSON.parse(localStorage.getItem("cartItems"))
-  : []
+// const cartItemsFromStorage = localStorage.getItem("cartItems")
+//   ? JSON.parse(localStorage.getItem("cartItems"))
+//   : []
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
@@ -41,7 +41,7 @@ const shippingAddressStorage = localStorage.getItem("shippingAddress")
 
 const initialState = {
   cart: {
-    cartItems: cartItemsFromStorage,
+    cartItems: [],
     shippingAddress: shippingAddressStorage,
   },
   userLogin: { userInfo: userInfoFromStorage },

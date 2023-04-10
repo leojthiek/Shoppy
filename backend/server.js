@@ -10,6 +10,7 @@ import UserRoute from "./routes/userRoutes.js"
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js"
 import OrderRoute from "./routes/orderRoutes.js"
 import Order from "./models/orderModel.js"
+import CartRoutes from './routes/cartRoutes.js'
 
 dotenv.config()
 connectDB()
@@ -67,7 +68,7 @@ app.get("/", (req, res) => {
 app.use("/api/products", productRoute)
 app.use("/users", UserRoute)
 app.use("/orders", OrderRoute)
-
+app.use('/api/cart',CartRoutes)
 
 app.use(notFound)
 app.use(errorHandler)

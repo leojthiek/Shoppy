@@ -1,28 +1,50 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams,useNavigate } from "react-router-dom"
 import { Row, Col, ListGroup, Image, Button, Form, Card } from "react-bootstrap"
 import Message from "../component/message"
-import { addCartAction, cartRemoveAction } from "../redux/action/cartAction"
+import { addCartAction ,getCartItem,cartRemoveAction} from "../redux/action/cartAction"
 
 export default function CartScreen() {
   const params = useParams()
+  const productId=params.id
   const dispatch = useDispatch()
+  const navigate=useNavigate()
 
   const cart = useSelector((state) => state.cart)
-
   const { cartItems } = cart
+
+
+  const userLogin=useSelector((state)=>state.userLogin)
+  const {userInfo}=userLogin
+
+  const userCartItems = cartItems.filter((item) => item.user === userInfo._id)
+
 
   const quantity = window.location.search
     ? Number(window.location.search.split("=")[1])
     : 1
 
   React.useEffect(() => {
-    dispatch(addCartAction(params.id, quantity))
-  }, [dispatch, params, quantity])
+  if(!userInfo){
+    navigate('/login')
+  }else{
+    dispatch(getCartItem())
+  }
+
+  if(productId){
+    dispatch(addCartAction(productId,quantity))
+
+  }
+  
+  
+  }, [dispatch, quantity,navigate,productId,userInfo])
 
   const removeFromCartHandler = (id) => {
     dispatch(cartRemoveAction(id))
+    navigate('/cart')
+    dispatch(getCartItem())
+    
   }
 
   return (
@@ -35,23 +57,26 @@ export default function CartScreen() {
           </Message>
         ) : (
           <ListGroup variant='flush'>
-            {cartItems.map((item) => (
-              <ListGroup.Item key={item.product}>
+            {userCartItems.map((item) => (
+              <ListGroup.Item key={item._id}>
                 <Row>
                   <Col md={2}>
                    { <Image src={item.image.url} alt={item.name} fluid rounded />}
                   </Col>
                   <Col md={3}>
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    <Link to={`/product/${item._id}`}>{item.name}</Link>
                   </Col>
                   <Col md={2}>Rs-{item.price}</Col>
                   <Col md={2}>
                     <Form.Select
                       value={item.qty}
-                      onChange={(e) =>
+                      onChange={(e) =>{
                         dispatch(
-                          addCartAction(item.product, Number(e.target.value))
+                          addCartAction(item._id, Number(e.target.value))
                         )
+                       
+                      }
+                      
                       }
                     >
                       {[...Array(item.countInStock).keys()].map((x) => (
@@ -63,7 +88,7 @@ export default function CartScreen() {
                     <Button
                       type='button'
                       variant='light'
-                      onClick={() => removeFromCartHandler(item.product)}
+                      onClick={() => removeFromCartHandler(item.product._id)}
                     >
                       <i className='fas fa-trash'></i>
                     </Button>
