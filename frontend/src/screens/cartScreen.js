@@ -64,7 +64,7 @@ export default function CartScreen() {
                    { <Image src={item.image.url} alt={item.name} fluid rounded />}
                   </Col>
                   <Col md={3}>
-                    <Link to={`/product/${item._id}`}>{item.name}</Link>
+                    <Link to={`/product/${item._id}`} style={{textDecoration:'none'}}>{item.name}</Link>
                   </Col>
                   <Col md={2}>Rs-{item.price}</Col>
                   <Col md={2}>

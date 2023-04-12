@@ -9,7 +9,7 @@ export default function product({ product }) {
         <Card.Img className='product-image' src={product.image.url} variant='top' />
       </Link>
       <Card.Body>
-        <Link to={`/product/${product._id}`}>
+        <Link to={`/product/${product._id}`} style={{textDecoration:'none'}}>
           <Card.Text as='div'>
             <strong>{product.name}</strong>
           </Card.Text>

@@ -19,6 +19,7 @@ export default function OrderScreen() {
   const dispatch = useDispatch()
 
   const cart = useSelector((state) => state.cart)
+  const {cartItems}=cart
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -36,7 +37,7 @@ export default function OrderScreen() {
     return Math.round((num * 100) / 100).toFixed(2)
   }
   const itemPrice = addDecimal(
-    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   )
 
   const deliverhandler = () => {
@@ -111,7 +112,7 @@ export default function OrderScreen() {
                 {order.user.name}
               </p>
               <p>
-                <a href={`mailto: ${order.user.email}`}>{order.user.email}</a>
+                <a href={`mailto: ${order.user.email}`}style={{textDecoration:'none'}}>Email :{order.user.email}</a>
               </p>
 
               <p>
@@ -158,7 +159,7 @@ export default function OrderScreen() {
                           />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`}>
+                          <Link to={`/product/${item.product}`} style={{textDecoration:'none'}}>
                             {item.name}
                           </Link>
                         </Col>
