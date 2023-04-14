@@ -2,6 +2,36 @@ import * as constant from "../constant/userConstant"
 import { MYORDER_LIST_RESET } from "../constant/orderConstant"
 import axios from "axios"
 
+export const googleSignIn = () => async (dispatch) =>{
+  try {
+    window.open("http://localhost:5000/auth/google", '_self')
+
+    dispatch({ type: constant.USER_LOGIN_REQUEST });
+
+    const config={
+      headers:{
+         'Content-Type':'application/json'
+      }
+    }
+
+    const { data } = await axios.get("/api/auth/user",config);
+
+    dispatch({ type: constant.USER_LOGIN_SUCCESS, payload: data });
+
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: constant.USER_LOGIN_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+
+
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -38,7 +68,7 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: constant.USER_LOGOUT,
   })
- 
+
   dispatch({
     type: constant.USER_DETAILS_RESET,
   })
@@ -138,7 +168,7 @@ export const updateUserProfileAction = (user) => async (dispatch, getState) => {
       type: constant.USER_UPDATE_PROFILE_SUCCESS,
       payload: data,
     })
-    localStorage.setItem('userInfo',JSON.stringify(data))
+    localStorage.setItem("userInfo", JSON.stringify(data))
     dispatch({
       type: constant.USER_LOGIN_SUCCESS,
       payload: data,
@@ -197,7 +227,7 @@ export const userDeleteAction = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-   await axios.delete(`/users/${id}`, config)
+    await axios.delete(`/users/${id}`, config)
 
     dispatch({
       type: constant.USER_DELETE_SUCCESS,
@@ -223,16 +253,16 @@ export const userUpdateAction = (user) => async (dispatch, getState) => {
     } = getState()
     const config = {
       headers: {
-        'Content-Type':'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-  const {data}= await axios.put(`/users/${user._id}`,user, config)
+    const { data } = await axios.put(`/users/${user._id}`, user, config)
 
     dispatch({
       type: constant.USER_EDIT_SUCCESS,
     })
-    dispatch({type:constant.USER_DETAILS_SUCCESS,payload:data})
+    dispatch({ type: constant.USER_DETAILS_SUCCESS, payload: data })
   } catch (error) {
     dispatch({
       type: constant.USER_EDIT_FAILURE,

@@ -4,7 +4,7 @@ import { Form, Button, Row, Col } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../component/message"
 import Loader from "../component/loader"
-import { login } from "../redux/action/userAction"
+import { googleSignIn, login } from "../redux/action/userAction"
 import FormContainer from "../component/formContainer"
 
 export default function LoginScreen({history}) {
@@ -24,11 +24,16 @@ export default function LoginScreen({history}) {
      }else{
       setPassword('')
      }
-  },[navigate,redirect,userInfo])
+  },[navigate,redirect,userInfo,dispatch])
 
   const submitHandler=(e)=>{
       e.preventDefault()
       dispatch(login(email,password))
+  }
+
+  const handleGoogleLogin=(e)=>{
+  
+    dispatch(googleSignIn())
   }
 
   return (
@@ -56,8 +61,18 @@ export default function LoginScreen({history}) {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button type="submit" variant="primary">Sign In</Button>
+        <div className="d-grid py-4">
+        <Button className="rounded" type="submit" variant="primary">Sign In</Button>
+
+        </div>
       </Form>
+      <div className="text-center">
+        <p>or</p>
+      </div>
+
+      <div className="d-grid">
+        <Button className="rounded" onClick={handleGoogleLogin}>Continue with Google</Button>
+      </div>
        
       <Row className="py-3">
         <Col>New Customer ? {''}

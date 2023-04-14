@@ -35,6 +35,11 @@ const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
 
   const user = await User.findOne({ email })
+  if(email && password === ''){
+   res.status(400) 
+   throw new Error('both field required')
+    
+  }
   if (user && user.matchPassword(password)) {
     res.json({
       _id: user._id,

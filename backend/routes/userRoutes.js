@@ -24,4 +24,6 @@ router
   .delete(protect, admin, deleteUser)
   .put(protect,admin, updateUser)
   .get(protect,admin, getUserById)
+
+
 export default router

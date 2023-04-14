@@ -2,6 +2,7 @@ import express from "express"
 import cloudinary from "cloudinary"
 import shortid from "shortid"
 import Razorpay from "razorpay"
+import passport from 'passport'
 import morgan from "morgan"
 import dotenv from "dotenv"
 import connectDB from "./config/db.js"
@@ -11,12 +12,27 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js"
 import OrderRoute from "./routes/orderRoutes.js"
 import Order from "./models/orderModel.js"
 import CartRoutes from './routes/cartRoutes.js'
+import session from "express-session"
+import { Strategy as GoogleStrategy } from "passport-google-oauth20"
+import User from "./models/userModel.js"
+import generateToken from "./utills/generateTokens.js"
+
 
 dotenv.config()
 connectDB()
 
 const app = express()
 app.use(express.json({limit:'50mb'}))
+
+app.use(session({
+  secret:'rokiemlo',
+  resave:false,
+  saveUninitialized:false
+}))
+
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 if (process.env.NODE_ENV === "development mode") {
   app.use(morgan("dev"))
@@ -59,6 +75,80 @@ app.post('/razorpay/pay/:id',async(req,res)=>{
     console.log(error)
   }
 })
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/auth/google/callback",
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      console.log(profile)
+      try {
+        const existingUser = await User.findOne({googleId:profile.id});
+        if (existingUser) {
+          done(null, existingUser);
+        } else {
+          const user = await User.create({
+            googleId: profile.id,
+            name: profile.displayName,
+
+          });
+          
+          done(null, user);
+        }
+      } catch (error) {
+        console.log(error);
+        done(error, null);
+      }
+    }
+  )
+);
+
+passport.serializeUser((user,done)=>{
+  done(null,user.id)
+})
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+    .exec()
+    .then(user => done(null, user))
+    .catch(err => done(err, null));
+});
+
+
+
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
+  // Handle the redirect manually
+  if (req.user) {
+    // User successfully authenticated with Google
+    res.redirect('http://localhost:3000/');
+  } else {
+    // User failed to authenticate with Google
+    res.redirect('http://localhost:3000/login');
+  }
+});
+// API endpoint to retrieve authenticated user's information
+app.get('/api/auth/user',(req, res) => {
+  const user = req.user;
+  const token = generateToken(user._id);
+  res.json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token,
+  })
+    
+});
+
+
+
+
+
+
 
 
 
