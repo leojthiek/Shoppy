@@ -35,6 +35,10 @@ export default function RegisterScreen() {
       dispatch(registerAction(name,email,password))
    }
 
+   const handleGoogleRegister=()=>{
+    window.open("http://localhost:5000/auth/google", '_self')
+   }
+
   return (
     <FormContainer>
       <h1>Sign Up</h1>
@@ -79,8 +83,17 @@ export default function RegisterScreen() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button type="submit" variant="primary">Register</Button>
+        <div className="d-grid py-4">
+        <Button className="rounded" type="submit" variant="primary">Register</Button>
+
+        </div>
       </Form>
+      <div className="text-center">
+        <p>or</p>
+      </div>
+      <div className="d-grid">
+        <Button className="rounded" onClick={handleGoogleRegister}>Register with Google</Button>
+      </div>
        
       <Row className="py-3">
         <Col>Have an Account? {''}

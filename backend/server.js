@@ -18,6 +18,8 @@ import User from "./models/userModel.js"
 import generateToken from "./utills/generateTokens.js"
 
 
+
+
 dotenv.config()
 connectDB()
 
@@ -84,18 +86,15 @@ passport.use(
       callbackURL: "/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log(profile)
       try {
-        const existingUser = await User.findOne({googleId:profile.id});
+        const existingUser = await User.findOne({ googleId: profile.id });
         if (existingUser) {
           done(null, existingUser);
         } else {
           const user = await User.create({
             googleId: profile.id,
             name: profile.displayName,
-
           });
-          
           done(null, user);
         }
       } catch (error) {
@@ -106,43 +105,51 @@ passport.use(
   )
 );
 
-passport.serializeUser((user,done)=>{
-  done(null,user.id)
-})
+// Serialize and deserialize user object for session management
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
 passport.deserializeUser((id, done) => {
   User.findById(id)
     .exec()
-    .then(user => done(null, user))
-    .catch(err => done(err, null));
+    .then((user) => done(null, user))
+    .catch((err) => done(null, err));
 });
 
 
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+// Route to initiate the Google sign-in flow
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
 
-app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-  // Handle the redirect manually
+// Route to handle the Google callback and redirect to client-side login
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google"),
+  (req, res) => {
+    res.redirect("http://localhost:3000/login");
+  }
+);
+
+// API endpoint to retrieve authenticated user's information
+app.get("/api/auth/user", (req, res) => {
   if (req.user) {
-    // User successfully authenticated with Google
-    res.redirect('http://localhost:3000/');
+    const { _id, googleId, name } = req.user;
+    res.json({
+      id: _id,
+      googleId,
+      name,
+      token: generateToken(_id),
+    });
   } else {
-    // User failed to authenticate with Google
-    res.redirect('http://localhost:3000/login');
+    res.status(401).json({ message: "Unauthorized please register" });
   }
 });
-// API endpoint to retrieve authenticated user's information
-app.get('/api/auth/user',(req, res) => {
-  const user = req.user;
-  const token = generateToken(user._id);
-  res.json({
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-    isAdmin: user.isAdmin,
-    token,
-  })
-    
-});
+
+
 
 
 

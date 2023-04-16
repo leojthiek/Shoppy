@@ -2,19 +2,13 @@ import * as constant from "../constant/userConstant"
 import { MYORDER_LIST_RESET } from "../constant/orderConstant"
 import axios from "axios"
 
-export const googleSignIn = () => async (dispatch) =>{
-  try {
-    window.open("http://localhost:5000/auth/google", '_self')
 
+
+export const googleSignIn = () => async (dispatch) => {
+  try {
     dispatch({ type: constant.USER_LOGIN_REQUEST });
 
-    const config={
-      headers:{
-         'Content-Type':'application/json'
-      }
-    }
-
-    const { data } = await axios.get("/api/auth/user",config);
+    const { data } = await axios.get("/api/auth/user");
 
     dispatch({ type: constant.USER_LOGIN_SUCCESS, payload: data });
 
@@ -29,6 +23,8 @@ export const googleSignIn = () => async (dispatch) =>{
     });
   }
 };
+
+
 
 
 

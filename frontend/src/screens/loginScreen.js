@@ -32,7 +32,6 @@ export default function LoginScreen({history}) {
   }
 
   const handleGoogleLogin=(e)=>{
-  
     dispatch(googleSignIn())
   }
 
