@@ -107,7 +107,7 @@ passport.use(
 
 // Serialize and deserialize user object for session management
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user._id);
 });
 
 passport.deserializeUser((id, done) => {
@@ -137,12 +137,13 @@ app.get(
 // API endpoint to retrieve authenticated user's information
 app.get("/api/auth/user", (req, res) => {
   if (req.user) {
-    const { _id, googleId, name } = req.user;
+    // const { _id, googleId, name } = req.user;
+    const user=req.user
     res.json({
-      id: _id,
-      googleId,
-      name,
-      token: generateToken(_id),
+      id:user. _id,
+      googleId:user.googleId,
+      name:user.name,
+      token: generateToken(user._id),
     });
   } else {
     res.status(401).json({ message: "Unauthorized please register" });

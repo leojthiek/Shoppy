@@ -18,7 +18,7 @@ export default function CartScreen() {
   const userLogin=useSelector((state)=>state.userLogin)
   const {userInfo}=userLogin
 
-  const userCartItems = cartItems.filter((item) => item.user === userInfo._id)
+  const userCartItems = cartItems.filter((item) => item.user === userInfo._id || userInfo.id)
 
 
   const quantity = window.location.search
