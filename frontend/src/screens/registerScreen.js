@@ -21,6 +21,8 @@ export default function RegisterScreen() {
   const redirect=window.location.search ? window.location.search.split('=')[1]:'/'
 
 
+
+
   React.useEffect(()=>{
      if(userInfo){
        navigate(redirect)
@@ -29,6 +31,7 @@ export default function RegisterScreen() {
 
   const submitHandler=(e)=>{
       e.preventDefault()
+    
       if(password !== confirmPassword){
         setMessage('password do not match')
       }
@@ -40,14 +43,15 @@ export default function RegisterScreen() {
    }
 
   return (
+    <div className="register-form">
     <FormContainer>
-      <h1>Sign Up</h1>
+      <h1 className="register-title">Sign Up</h1>
       {message && <Message variant="danger">{message}</Message>}
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader/>}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='name'>
-          <Form.Label>Name</Form.Label>
+          {/* <Form.Label>Name</Form.Label> */}
           <Form.Control
             type='name'
             placeholder='Enter name'
@@ -55,8 +59,9 @@ export default function RegisterScreen() {
             onChange={(e) => setName(e.target.value)}
           ></Form.Control>
         </Form.Group>
+        <br/>
         <Form.Group controlId='email'>
-          <Form.Label>Email Address</Form.Label>
+          {/* <Form.Label>Email Address</Form.Label> */}
           <Form.Control
             type='email'
             placeholder='Enter email'
@@ -64,9 +69,10 @@ export default function RegisterScreen() {
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
+        <br/>
 
         <Form.Group controlId='password'>
-          <Form.Label>Password</Form.Label>
+          {/* <Form.Label>Password</Form.Label> */}
           <Form.Control
             type='password'
             placeholder='Enter Password'
@@ -74,8 +80,10 @@ export default function RegisterScreen() {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
+        <br/>
+
         <Form.Group controlId='ConfirmPassword'>
-          <Form.Label> Confirm Password</Form.Label>
+          {/* <Form.Label> Confirm Password</Form.Label> */}
           <Form.Control
             type='password'
             placeholder='Confirm Password'
@@ -97,11 +105,12 @@ export default function RegisterScreen() {
        
       <Row className="py-3">
         <Col>Have an Account? {''}
-        <Link to={redirect ? `/login?redirect=${redirect}`: '/login'}>
+        <Link to={redirect ? `/login?redirect=${redirect}`: '/login'} className="register">
             Login
         </Link>
         </Col>
       </Row>
     </FormContainer>
+    </div>
   )
 }

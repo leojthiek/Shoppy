@@ -72,34 +72,43 @@ const updateProduct = asyncHandler(async (req, res) => {
   const { name, price, description, image, countInStock, brand, category } =
     req.body
 
-  if (image) {
-    const uploadres = await cloudinary.uploader.upload(image, {
-      folder: "shoppy",
-    })
+    if (image) {
+      const imagePath = typeof image === "object" ? JSON.stringify(image) : image;
+      const uploadres = await cloudinary.uploader.upload(imagePath, {
+        folder: "shoppy",
+      });
+    
     if (uploadres) {
-      const product = await Product.findById(req.params.id)
-
+      const product = await Product.findById(req.params.id);
+    
       if (product) {
-        product.name = name
-        product.price = price
-        product.description = description
-        product.image = uploadres
-        product.countInStock = countInStock
-        product.brand = brand
-        product.category = category
-
-        const updatedProduct = await product.save()
-        res.json(updatedProduct)
+        product.name = name;
+        product.price = price;
+        product.description = description;
+        product.image = uploadres.secure_url
+        product.countInStock = countInStock;
+        product.brand = brand;
+        product.category = category;
+    
+        const updatedProduct = await product.save();
+        res.json(updatedProduct);
       } else {
-        res.status(404)
-        throw new Error("product not found")
+        res.status(404);
+        throw new Error("Product not found");
       }
+    } else {
+      res.status(400);
+      throw new Error("Image upload failed");
     }
   } else {
     res.status(400)
-    throw new Error("image upload fail")
+    throw new Error("Image upload failed")
   }
 })
+
+
+
+
 
 const createProductReviews = asyncHandler(async (req, res) => {
   const { rating, comment } = req.body
@@ -144,7 +153,7 @@ const createProductReviews = asyncHandler(async (req, res) => {
 //access   public
 
 const getTopProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({}).sort({ rating: -1 }).limit(3)
+  const products = await Product.find({}).sort({ rating: -1 }).limit(1)
 
   res.json(products)
 })

@@ -18,14 +18,25 @@ export default function ProductEditScreen() {
   const dispatch = useDispatch()
 
   const [name, setName] = React.useState("")
+  const [nameValidator, setNameValidator] = React.useState("")
+
   const [price, setPrice] = React.useState(0)
+  const [priceValidator, setPriceValidator] = React.useState("")
+
   const [brand, setBrand] = React.useState("")
+  const [brandValidator, setBrandValidator] = React.useState("")
+
   const [category, setCategory] = React.useState("")
+  const [categoryValidator, setCategoryValidator] = React.useState("")
+
   const [image, setImage] = React.useState("")
+  // const [imageValidator, setImageValidator] = React.useState("")
+
   const [description, setDescription] = React.useState("")
+  const [descriptionValidator, setDescriptionValidator] = React.useState("")
+
   const [countInStock, setCountInStock] = React.useState(0)
 
-  
   const productDetails = useSelector((state) => state.productDetails)
   const { product, loading, error } = productDetails
 
@@ -70,6 +81,32 @@ export default function ProductEditScreen() {
 
   const submitHandler = (e) => {
     e.preventDefault()
+
+    if (!name || name === "") {
+      setNameValidator("Product name is required")
+      return
+    }
+    if (!price || price === "") {
+      setPriceValidator("Product price is required")
+      return
+    } else if (isNaN(price)) {
+      setPriceValidator("price should be a number")
+      return
+    }
+    if (!brand || brand === "") {
+      setBrandValidator("Product brand is required")
+      return
+    }
+
+    if (!category || setCategoryValidator === "") {
+      setCategoryValidator("Product category is required")
+      return
+    }
+
+    if (!description || description === "") {
+      setDescriptionValidator("Product Description is required")
+    }
+
     dispatch(
       productUpdateAction({
         _id: productId,
@@ -86,29 +123,36 @@ export default function ProductEditScreen() {
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0]
-    TransformFile(file)
+
+    if (file) {
+      TransformFile(file)
+    }
   }
 
   const TransformFile = (file) => {
     const reader = new FileReader()
 
-    if (file) {
-      reader.readAsDataURL(file)
-      reader.onloadend = () => {
-        setImage(reader.result)
-      }
-    } else {
-      setImage("")
+    reader.readAsDataURL(file)
+    reader.onloadend = () => {
+      setImage(reader.result)
     }
   }
 
   return (
-    <>
-      <Link to='/admin/productlist' className='btn btn-light my-3'>
+    <div className='product-edit-screen'>
+      <Link
+        to='/admin/productlist'
+        className='btn btn-danger rounded py-2 mt-3'
+      >
         Go Back
       </Link>
       <FormContainer>
-        <h1>Edit Product</h1>
+        {product.name === "sample Name" ? (
+          <h1 className='edit-product-title'>Create Product</h1>
+        ) : (
+          <h1 className='edit-product-title'>Edit Product</h1>
+        )}
+
         {loadingupdate && <Loader />}
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
@@ -116,87 +160,113 @@ export default function ProductEditScreen() {
         ) : error ? (
           <Message variant='danger'>{error}</Message>
         ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId='name'>
+          <Form onSubmit={submitHandler} className='form-container'>
+            <Form.Group controlId='name' className='edit-product-name'>
               <Form.Label>Name</Form.Label>
-              <Form.Control
+              <Form.Control 
+                className='edit-control-name'
                 type='text'
                 placeholder='Enter Name'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
+            {nameValidator && (
+              <Message variant='danger'>{nameValidator}</Message>
+            )}
 
-            <Form.Group controlId='price'>
+            <Form.Group controlId='price' className='edit-product-price'>
               <Form.Label>price</Form.Label>
               <Form.Control
+                className='edit-control-name'
                 type='text'
                 placeholder='Enter price'
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               ></Form.Control>
             </Form.Group>
+            {priceValidator && (
+              <Message variant='danger'>{priceValidator}</Message>
+            )}
 
-            <Form.Group controlId='brand'>
+            <Form.Group controlId='brand' className='edit-product-brand'>
               <Form.Label>Brand</Form.Label>
               <Form.Control
+                className='edit-control-name'
                 type='text'
                 placeholder='Enter Brand'
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
               ></Form.Control>
             </Form.Group>
+            {brandValidator && (
+              <Message variant='danger'>{brandValidator}</Message>
+            )}
 
-            <Form.Group controlId='category'>
+            <Form.Group controlId='category' className='edit-product-category'>
               <Form.Label>Category</Form.Label>
               <Form.Control
+                className='edit-control-name'
                 type='text'
                 placeholder='Enter Category'
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               ></Form.Control>
             </Form.Group>
+            {categoryValidator && (
+              <Message variant='danger'>{categoryValidator}</Message>
+            )}
 
-            <Form.Group controlId='image'>
+            <Form.Group controlId='image' className='edit-product-image'>
               <Form.Label>Product Image</Form.Label>
               <Form.Control
+                className='edit-control-name'
                 type='file'
-                accept="image/"
+                accept='image/jpeg, image/jpg, image/png'
                 placeholder='Upload an Image'
                 onChange={handleImageUpload}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group>
-              <Image className="preview-image" src={image && image}/>
+              <Image className='preview-image' src={image} />
             </Form.Group>
 
-            <Form.Group controlId='description'>
+            <Form.Group
+              controlId='description'
+              className='edit-product-description'
+            >
               <Form.Label>Description</Form.Label>
               <Form.Control
+                className='edit-control-name'
                 type='text'
                 placeholder='Enter Description'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></Form.Control>
             </Form.Group>
+            {descriptionValidator && (
+              <Message variant='danger'>{descriptionValidator}</Message>
+            )}
 
-            <Form.Group controlId='countInStock'>
+            <Form.Group controlId='countInStock' className='edit-product-stock'>
               <Form.Label>Stock</Form.Label>
               <Form.Control
+                className='edit-control-name'
                 type='text'
                 placeholder='Enter No.of Stock'
                 value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
               ></Form.Control>
             </Form.Group>
-
-            <Button type='Submit' variant='primary' className='rounded'>
-              Update
-            </Button>
+            <div className='d-grid py-2'>
+              <Button type='Submit' variant='primary' className='rounded'>
+                Update
+              </Button>
+            </div>
           </Form>
         )}
       </FormContainer>
-    </>
+    </div>
   )
 }

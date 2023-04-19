@@ -152,7 +152,7 @@ export default function OrderScreen() {
                       <Row>
                         <Col md={1}>
                           <Image
-                            src={item.image.url}
+                            src={item.image}
                             alt={item.name}
                             fluid
                             rounded

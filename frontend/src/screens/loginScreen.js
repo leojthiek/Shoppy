@@ -36,13 +36,14 @@ export default function LoginScreen({history}) {
   }
 
   return (
+    <div className="login-form">
     <FormContainer>
-      <h1>Sign In</h1>
+      <h1 className="login-title">Sign In</h1>
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader/>}
       <Form onSubmit={submitHandler}autoComplete='off' >
         <Form.Group controlId='email'>
-          <Form.Label>Email Address</Form.Label>
+          {/* <Form.Label>Email Address</Form.Label> */}
           <Form.Control
             type='email'
             placeholder='Enter Email'
@@ -51,8 +52,10 @@ export default function LoginScreen({history}) {
           ></Form.Control>
         </Form.Group>
 
+        <br/>
+
         <Form.Group controlId='password'>
-          <Form.Label>Password</Form.Label>
+          {/* <Form.Label>Password</Form.Label> */}
           <Form.Control
             type='password'
             placeholder='Enter Password'
@@ -75,11 +78,12 @@ export default function LoginScreen({history}) {
        
       <Row className="py-3">
         <Col>New Customer ? {''}
-        <Link to={redirect ? `/register?redirect=${redirect}`: '/register'}>
+        <Link to={redirect ? `/register?redirect=${redirect}`: '/register'} className="login-register">
             Register
         </Link>
         </Col>
       </Row>
     </FormContainer>
+    </div>
   )
 }

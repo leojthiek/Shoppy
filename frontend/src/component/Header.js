@@ -30,9 +30,10 @@ const logoutHandler=()=>{
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
 
-            <SearchBox/>
             
             <Nav className='navlist-header'>
+            <SearchBox/>
+
 
               <LinkContainer to='/cart'>
                 <Nav.Link>

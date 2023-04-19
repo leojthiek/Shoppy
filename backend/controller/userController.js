@@ -8,6 +8,21 @@ const registerUser=asyncHandler(async(req,res)=>{
 
   const userExist= await User.findOne({email})
 
+  if(name.length < 3){
+    res.status(400)
+    throw new Error('name should be atleast 3 character long')
+  
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(!emailRegex.test(email)){
+    res.status(400)
+    throw new Error('Invalid email address')
+  }
+  if(password.length < 4 || password===""){
+    res.status(400)
+    throw new Error('password is required and should be atleast 4 character long')
+  }
+
   if(userExist){
     res.status(400)
     throw new Error('user already exist')

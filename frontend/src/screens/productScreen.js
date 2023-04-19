@@ -69,7 +69,7 @@ export default function ProductScreen() {
           <Row>
             <Col md={6}>
               {/* fluid to force image to stay inside column */}
-            {product.image && <Image src={product.image.url}fluid />}
+            {product.image && <Image src={product.image}fluid />}
             </Col>
 
             <Col md={3}>

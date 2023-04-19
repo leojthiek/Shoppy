@@ -6,7 +6,7 @@ export default function product({ product }) {
   return (
     <Card className=' rounded h-100'>
       <Link to ={`/product/${product._id}`}>
-        <Card.Img className='product-image' src={product.image.url} variant='top' />
+        <Card.Img className='product-image' src={product.image} variant='top' />
       </Link>
       <Card.Body>
         <Link to={`/product/${product._id}`} style={{textDecoration:'none'}}>

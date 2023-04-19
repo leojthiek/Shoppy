@@ -32,7 +32,9 @@ h2{
   margin-top: 10px;
 }
 .preview-image{
-  width:70px; 
+  width:100px; 
+  padding-bottom: 20px;
+
 }
 .box{
   width: full;
@@ -58,4 +60,86 @@ h2{
     font-size: 10px;
   }
 }
+.product-edit-screen{
+  background-color: rgb(100, 87, 87);
+  color: white;
+  height:70rem;
+  margin-top: -25px;
+}
+.edit-product-name,.edit-product-price,.edit-product-brand,.edit-product-category,.edit-product-image,.edit-product-description,.edit-product-stock,.edit-product-btn{
+  padding-bottom: 20px;
+}
+.edit-product-title{
+  color: white;
+  text-align: center;
+}
+.edit-control-name{
+  border-radius: 20px;
 
+}
+.login-form{
+  background-color:rgb(117, 114, 141);
+  box-shadow: 2px 2px 5px #290202;
+  margin-top: -1.5rem;
+  height: 40rem;
+  color: white;
+  }
+  .login-title{
+    color: white;
+    text-align: center;
+    margin-top: 5rem;
+  }
+  .login-register{
+    color: white;
+  }
+  
+
+  .register-form{
+    background-color:rgb(117, 114, 141);
+    box-shadow: 2px 2px 5px #290202;
+    margin-top: -1.5rem;
+    height: 50rem;
+    color: white;
+  }
+  .register-title{
+    color: white;
+    text-align: center;
+    margin-top: 5rem;
+  }
+  .register{
+    color: white;
+  }
+  .search-box{
+    display: flex;
+    align-items: center;
+
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    margin:7px 0;
+  }
+  
+  .search-box-input[type="text"] {
+    flex: 1;
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .search-box-button[type="submit"] {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-box-button[type="submit"]:hover {
+    background-color: #c82333;
+  }
+  

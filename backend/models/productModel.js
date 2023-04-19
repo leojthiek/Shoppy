@@ -28,8 +28,8 @@ const productSchema = mongoose.Schema(
       required: true,
     },
     image: {
-      type:Object,
-      required: true,
+      type:String,
+      required: false,
     },
     brand: {
       type: String,

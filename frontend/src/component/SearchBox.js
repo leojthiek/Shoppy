@@ -16,15 +16,14 @@ export default function SearchBox() {
     }
   }
   return (
-    <Form onSubmit={submitHandler} className='d-flex'>
-      <Form.Control
+    <Form onSubmit={submitHandler} className='search-box'>
+      <Form.Control className="search-box-input"
         type='text'
         name='q'
         onChange={(e) => setkeyword(e.target.value)}
         placeholder='Search Products...'
-        className='mr-sm-2 ml-sm-5'
       ></Form.Control>
-      <Button type="submit" variant="success">Search</Button>
+      <Button type="submit" className="search-box-button"  variant="danger">Search</Button>
     </Form>
   )
 }

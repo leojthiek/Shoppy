@@ -42,22 +42,22 @@ export default function UserEditScreen() {
         setIsAdmin(user.isAdmin)
       }
     }
-  }, [dispatch, user, userId,navigate,successEdit])
+  }, [dispatch, user, userId, navigate, successEdit])
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(userUpdateAction({_id:userId ,name,email,isAdmin}))
+    dispatch(userUpdateAction({ _id: userId, name, email, isAdmin }))
   }
 
   return (
-    <>
-      <Link to='/admin/userlist' className='btn btn-light my-3'>
+    <div className="user-edit-screen">
+      <Link to='/admin/userlist' className='user-goBack-btn'>
         Go Back
       </Link>
       <FormContainer>
-        <h1>Edit User</h1>
-       {loadingEdit && <Loader/>}
-       {errorEdit && <Message variant='danger'>{errorEdit}</Message>}
+        <h1 className="user-edit-title">Edit User</h1>
+        {loadingEdit && <Loader />}
+        {errorEdit && <Message variant='danger'>{errorEdit}</Message>}
 
         {loading ? (
           <Loader />
@@ -65,26 +65,28 @@ export default function UserEditScreen() {
           <Message variant='danger'>{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId='name'>
+            <Form.Group controlId='name' className='form-name'>
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type='name'
+                disabled={true}
                 placeholder='Enter name'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
-            <Form.Group controlId='email'>
-              <Form.Label>name Address</Form.Label>
+            <Form.Group controlId='email' className='form-email'>
+              <Form.Label>Email</Form.Label>
               <Form.Control
-                type='emil'
+                type='email'
+                disabled={true}
                 placeholder='Enter email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='isAdmin'>
+            <Form.Group controlId='isAdmin' className='form-checkbox'>
               <Form.Check
                 type='checkbox'
                 checked={isAdmin}
@@ -92,13 +94,14 @@ export default function UserEditScreen() {
                 onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
             </Form.Group>
-
-            <Button type='submit' variant='primary'>
-              update
-            </Button>
+            <div className="d-grid">
+              <Button type='submit' variant='primary' className='form-button'>
+                update
+              </Button>
+            </div>
           </Form>
         )}
       </FormContainer>
-    </>
+    </div>
   )
 }
