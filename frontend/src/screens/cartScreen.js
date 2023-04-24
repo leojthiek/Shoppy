@@ -37,7 +37,6 @@ export default function CartScreen() {
 
   }
   
-  
   }, [dispatch, quantity,navigate,productId,userInfo])
 
   const removeFromCartHandler = (id) => {
@@ -49,7 +48,7 @@ export default function CartScreen() {
 
   return (
     <Row>
-      <h1>SHOPPING CART</h1>
+      <h1 className="cartscreen-title">SHOPPING CART</h1>
       <Col md={8}>
         {cartItems.length === 0 ? (
           <Message>
@@ -58,13 +57,13 @@ export default function CartScreen() {
         ) : (
           <ListGroup variant='flush'>
             {userCartItems.map((item) => (
-              <ListGroup.Item key={item._id}>
+              <ListGroup.Item key={item._id} className="cartscreen-main">
                 <Row>
                   <Col md={2}>
-                   { <Image src={item.image} alt={item.name} fluid rounded />}
+                   { <Image className="cart-image" src={item.image[0]} alt={item.name} fluid rounded />}
                   </Col>
                   <Col md={3}>
-                    <Link to={`/product/${item._id}`} style={{textDecoration:'none'}}>{item.name}</Link>
+                    <Link to={`/product/${item._id}`} className="cartscreen-name" style={{textDecoration:'none'}}>{item.name}</Link>
                   </Col>
                   <Col md={2}>Rs-{item.price}</Col>
                   <Col md={2}>
@@ -87,7 +86,7 @@ export default function CartScreen() {
                   <Col md={2}>
                     <Button
                       type='button'
-                      variant='light'
+                      variant='danger'
                       onClick={() => removeFromCartHandler(item.product._id)}
                     >
                       <i className='fas fa-trash'></i>
@@ -100,9 +99,9 @@ export default function CartScreen() {
         )}
       </Col>
       <Col md={4}>
-        <Card>
+        <Card className="cartscreen-summary-card">
           <ListGroup variant='flush'>
-            <ListGroup.Item>
+            <ListGroup.Item className="cartscreen-summary-subtotal">
               <h2>
                 Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
                 items
@@ -112,10 +111,10 @@ export default function CartScreen() {
                 .reduce((acc, item) => acc + item.qty * item.price, 0)
                 .toFixed(2)}
             </ListGroup.Item>
-            <ListGroup.Item className='btn btn-block'>
-              <Link to={`/login?redirect=shipping`}>
+            <ListGroup.Item className='cartscreen-btn-div'>
+              <Link to={`/login?redirect=shipping`} className="d-grid">
                 <Button
-                  className='rounded'
+                  className='cartscreen-btn'
                   type='button'
                   disabled={cartItems.length === 0}
                 >

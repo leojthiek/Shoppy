@@ -28,9 +28,9 @@ export default function HomeScreen() {
   
 
   return (
-    <>
+    <div className="py-4">
       {!keyword && <ProductCrousel/>}
-      <h1>Latest Products</h1>
+      <h1 className="latest-product-title">Latest Products</h1>
       {loading ? (
         <Loader/>
       ) : error ? (
@@ -44,11 +44,12 @@ export default function HomeScreen() {
             </Col>
           ))}
         </Row>
+        <br/>
         <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''}/>
         </>
       )}
       
 
-    </>
+    </div>
   )
 }

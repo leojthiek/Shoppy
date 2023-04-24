@@ -13,6 +13,22 @@ main{
 .product-image{
   height: 200px;
   padding: 10px;
+  background: linear-gradient(to top,rgb(13, 13, 13),rgb(228, 221, 221));
+
+}
+.card-body{
+ background-color: #2a2020;
+ color: white;
+  
+}
+.card-title{
+  color: white;
+}
+.latest-product-title{
+  color: white;
+  text-align: center;
+  margin-top: 2rem;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 h3{
   padding: 1.5rem 0;
@@ -28,12 +44,12 @@ h2{
 .checkout-btn{
   display:grid;
 }
-.payment-btn{
-  margin-top: 10px;
-}
+
 .preview-image{
   width:100px; 
+  height: 100px;
   padding-bottom: 20px;
+  margin-left: 6px;
 
 }
 .box{
@@ -42,23 +58,54 @@ h2{
   background-color: rgb(42, 35, 35);
 
 }
-.crousel{
-  background-color: rgb(23, 20, 20);
+.carousel{
+  background-color:white;
 }
-.crousel-image{
+.carousel-image{
   height: 400px;
   width: 1300px;
-  object-fit: cover;
+  object-fit:contain;
 
 }
-.crousel-empty-div{
+.carousel-empty-div{
   height: 100px;
   background: linear-gradient(to top,rgb(13, 13, 13),rgb(228, 221, 221));
 }
-@media (max-width:767px){
-  .crousel-text{
+@media (max-width:1197px){
+  .carousel-text{
+    font-size: 18px;
+  }
+}
+@media (max-width:519px){
+   .carousel-image{
+    height: 300px;
+   }
+   .carousel-text{
+    font-size: 15px;
+   }
+}
+@media (max-width:451px){
+  .carousel-image{
+   height: 230px;
+  }
+  .carousel-text{
+   font-size: 10px;
+  }
+  .carousel-empty-div{
+    height: 100px;
+  }
+}
+@media(max-width:375px){
+  .carousel-image{
+    height: 200px;
+  }
+  .carousel-empty-div{
+    height: 100px;
+  }
+  .carousel-text{
     font-size: 10px;
   }
+  
 }
 .product-edit-screen{
   background-color: rgb(100, 87, 87);
@@ -143,3 +190,327 @@ h2{
     background-color: #c82333;
   }
   
+
+  /* SHIPPING SCREEN */
+
+.shipping-container{
+  background-color: rgb(42, 35, 35);
+  height: 50rem;
+  color: white;
+}
+
+.shipping-address,.shipping-country,.shipping-state,.shipping-city,.shipping-pin{
+  padding-bottom: 20px;
+}
+.shipping-div{
+  display: flex;
+  justify-content: center;
+}
+.shipping-btn{
+ background-color: #c82333;
+ padding:12px 8rem;
+ border-radius: 20px;
+}
+.shipping-title{
+  text-align: center;
+  color: rgb(242, 245, 245);
+  font-family: 'Courier New', Courier, monospace;
+}
+.shipping-step{
+  background-color: #bdadad;
+  margin-top: 30px;
+}
+.main{
+  background-color: #1311117d;
+}
+
+
+/* PRODUCT SCREEN MAIN */
+
+
+
+
+
+/* PRODUCT LIST */
+.product-list-head{
+  color: rgb(195, 8, 8);
+  font-family: 'Courier New', Courier, monospace;
+
+}
+.product-list{
+  height:60vh;
+  padding-top: 3rem;
+}
+.product-list-row{
+  color:white;
+  background-color: rgb(33, 29, 29);
+  
+}
+.product-list-title{
+  font-family: 'Courier New', Courier, monospace;
+  color: white;
+
+}
+
+/* ALL ORDERLIST SCREEN */
+
+.orderlist-title{
+  color: white;
+  padding-top: 4rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: larger;
+
+}
+.orderlist-head{
+  color: #c82333;
+  font-family: 'Courier New', Courier, monospace;
+
+}
+.orderlist-row{
+  color: white;
+  background-color: rgb(33, 29, 29);
+
+}
+
+/* ORDER SCREEN */
+.orderscreen-list-group{
+ background-color: #1311117d;
+ color: white;
+}
+.orderscreen-email{
+  color: white;
+}
+.orderscreen-product-name{
+  color: white;
+}
+.orderscreen-pay-button{
+ background-color: #1311117d;
+  display:grid;
+}
+.orderscreen-btn{
+  border-radius: 20px;
+  background-color: #c82333;
+}
+.orderscreen-card-summary{
+  box-shadow: 10px 5px 5px;
+}
+
+/* PRODUCT SCREEN  */
+
+.productscreen-details,.productscreen-summary{
+ background-color: #1311117d;
+  color: white;
+}
+.productscreen-summary-btn{
+  display: grid;
+  background-color: #1311117d;
+  text-decoration: none;
+}
+.productscreen-cart-btn,.product-screen-review-btn{
+  background-color: #c82333;
+  border-radius: 20px;
+  text-decoration: none;
+}
+.productscreen-main-image{
+  width: 100%;
+  height: 350px;
+  object-fit:contain;
+}
+
+.productscreen-image-array{
+  width: 70px;
+  height: 60px;
+  
+}
+
+/* CART SCREEN  */
+.cartscreen-main{
+  background-color: #1311117d;
+  color: white;
+}
+.cartscreen-name{
+  color: white;
+}
+.cartscreen-title{
+  font-family: 'Courier New', Courier, monospace;
+  color: white;
+  padding-top: 2rem;
+  font-size: larger;
+}
+.cartscreen-summary-subtotal{
+  background-color: #1311117d;
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+
+}
+.cartscreen-btn-div{
+  background-color: #1311117d;
+}
+.cartscreen-btn{
+  background-color: #b50920;
+  border-radius: 20px;
+}
+.cartscreen-summary-card{
+  border:1px solid black;
+  box-shadow: 10px 15px;
+}
+.cart-image{
+  width: 100px;
+  height: 70px;
+}
+
+
+/* USERLIST SCREEN */
+
+.userlist-title{
+  font-family: 'Courier New', Courier, monospace;
+  color: white;
+  padding-top: 2rem;
+  font-size: larger;
+}
+.userlist-head{
+  color: #c82333;
+  font-family: 'Courier New', Courier, monospace;
+  
+}
+.userlist-row{
+  color: white;
+  background-color: rgb(33, 29, 29);
+  
+}
+
+
+/* PAYMENT METHOD SCREEN */
+
+.paymentscreen-title{
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+
+}
+.paymentscreen-radio{
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+
+}
+.paymentscreen-btn-div{
+  display: grid;
+}
+.paymentscreen-btn{
+  border-radius: 20px;
+  background-color: #c82333;
+  margin-top: 10px;
+}
+.paymentscreen-main{
+  padding-top: 4rem;
+}
+
+
+/* PLACEORDER SCREEN */
+
+.placeorderscreen-main{
+  padding-top: 3rem;
+}
+
+.placeorderscreen-shipping{
+  background-color: #1311117d;
+  color: white;
+}
+.placeorderscreen-shipping-title{
+  font-family: 'Courier New', Courier, monospace;
+}
+.placeorderscreen-payment{
+  background-color: #1311117d;
+  color: white;
+
+}
+.placeorderscreen-payment-title{
+  font-family: 'Courier New', Courier, monospace;
+}
+.placeorderscreen-order{
+  background-color: #1311117d;
+  color: white;
+
+}
+.placeorderscreen-order-title{
+  font-family: 'Courier New', Courier, monospace;
+}
+.placeorderscreen-items{
+  background-color: #1311117d;
+  color: white;
+
+}
+.placeorderscreen-name{
+  color: white;
+
+}
+
+.placeorderscreen-summary{
+  background-color: #1311117d;
+  color:white;
+}
+.placeorderscreen-summary-title{
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+}
+.placeorderscreen-btn-div{
+  background-color: #1311117d;
+  display: grid;
+}
+.placeorderscreen-btn{
+ border-radius: 20px;
+ background-color: #b50920;
+}
+.placeorderscreen-card{
+  box-shadow: 15px 15px;
+}
+
+
+/* PROFILE SCREEN  */
+
+.profilescreen-container{
+  padding: 10px;
+  color: white;
+}
+.profilescreen-user-title{
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+  padding-top: 2rem;
+}
+.profilescreen-name{
+  padding-bottom: 20px;
+}
+.profilescreen-email{
+  padding-bottom: 20px;
+}
+.profilescreen-order-title{
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+  padding-top: 2rem;
+  text-align: center;
+}
+.profilescreen-order-head{
+  color:white;
+  font-family: 'Courier New', Courier, monospace;
+}
+.profilescreen-order-row{
+  background-color: white;
+}
+
+/* USER EDIT SCREEN */
+
+.user-edit-screen{
+  padding-top: 20px;
+}
+.user-goBack-btn{
+  text-decoration: none;
+  padding:10px 25px;
+  background-color: rgb(29, 25, 25);
+  color: white;
+  font-size: small;
+  border-radius: 10px;
+}
+.user-edit-title{
+  text-align: center;
+  padding-top: 100px;
+}
+

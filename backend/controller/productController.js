@@ -69,42 +69,49 @@ const createProduct = asyncHandler(async (req, res) => {
 })
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, image, countInStock, brand, category } =
-    req.body
+  const { name, price, description, images, countInStock, brand, category } = req.body;
 
-    if (image) {
+  if (images) {
+    const imageUrls = [];
+
+    for (const image of images) {
       const imagePath = typeof image === "object" ? JSON.stringify(image) : image;
       const uploadres = await cloudinary.uploader.upload(imagePath, {
         folder: "shoppy",
       });
-    
-    if (uploadres) {
-      const product = await Product.findById(req.params.id);
-    
-      if (product) {
-        product.name = name;
-        product.price = price;
-        product.description = description;
-        product.image = uploadres.secure_url
-        product.countInStock = countInStock;
-        product.brand = brand;
-        product.category = category;
-    
-        const updatedProduct = await product.save();
-        res.json(updatedProduct);
+
+      if (uploadres) {
+        imageUrls.push(uploadres.secure_url);
       } else {
-        res.status(404);
-        throw new Error("Product not found");
+        res.status(400);
+        throw new Error("Image upload failed");
       }
+    }
+
+    const product = await Product.findById(req.params.id);
+
+    if (product) {
+      product.name = name;
+      product.price = price;
+      product.description = description;
+      product.images = imageUrls;
+      product.countInStock = countInStock;
+      product.brand = brand;
+      product.category = category;
+
+      const updatedProduct = await product.save();
+      res.json(updatedProduct);
     } else {
-      res.status(400);
-      throw new Error("Image upload failed");
+      res.status(404);
+      throw new Error("Product not found");
     }
   } else {
-    res.status(400)
-    throw new Error("Image upload failed")
+    res.status(400);
+    throw new Error("Image upload failed");
   }
-})
+});
+
+
 
 
 

@@ -15,9 +15,9 @@ import { USER_UPDATE_PROFILE_RESET } from "../redux/constant/userConstant"
 export default function ProfileScreen() {
   const [name, setName] = React.useState("")
   const [email, setEmail] = React.useState("")
-  const [password, setPassword] = React.useState("")
-  const [confirmPassword, setConfirmPassword] = React.useState("")
-  const [message, setMessage] = React.useState(null)
+  // const [password, setPassword] = React.useState("")
+  // const [confirmPassword, setConfirmPassword] = React.useState("")
+  // const [message, setMessage] = React.useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -38,7 +38,7 @@ export default function ProfileScreen() {
       navigate("/login")
     } else {
       if (!user.name) {
-        dispatch({type:USER_UPDATE_PROFILE_RESET})
+        dispatch({ type: USER_UPDATE_PROFILE_RESET })
         dispatch(userDetailsAction("profile"))
         dispatch(listMyOrderAction())
       } else {
@@ -46,47 +46,47 @@ export default function ProfileScreen() {
         setEmail(user.email)
       }
     }
-  }, [navigate, userInfo, dispatch, user,success])
+  }, [navigate, userInfo, dispatch, user, success])
 
   const submitHandler = (e) => {
     e.preventDefault()
-    if (password !== confirmPassword) {
-      setMessage("password do not match")
-    } else {
-      dispatch(updateUserProfileAction({ id: user._id, name, email, password }))
-    }
+
+    dispatch(updateUserProfileAction({ id: user._id, name, email }))
   }
 
   return (
-    <Row>
-      <Col md={3}>
-        <h2>User Profile</h2>
-        {success && <Message variant='success'>Profile updated</Message>}
-        {message && <Message variant='danger'>{message}</Message>}
-        {error && <Message variant='danger'>{error}</Message>}
-        {loading && <Loader />}
-        <Form onSubmit={submitHandler} className='py-3'>
-          <Form.Group controlId='name'>
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type='name'
-              placeholder='Enter name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+    <div className='profilescreen-container'>
+      <Row>
+        <Col md={3} className='profilescreen-user'>
+          <h2 className='profilescreen-user-title'>User Profile</h2>
+          {success && <Message variant='success'>Profile updated</Message>}
+          {/* {message && <Message variant='danger'>{message}</Message>} */}
+          {error && <Message variant='danger'>{error}</Message>}
+          {loading && <Loader />}
+          <Form onSubmit={submitHandler} className='py-3'>
+            <Form.Group controlId='name' className='profilescreen-name'>
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+              disabled
+                type='name'
+                placeholder='Enter name'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-          <Form.Group controlId='email'>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type='emil'
-              placeholder='Enter email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+            <Form.Group controlId='email' className='profilescreen-email'>
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                 disabled
+                type='emil'
+                placeholder='Enter email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-          <Form.Group controlId='password'>
+            {/* <Form.Group controlId='password' className="profilescreen-password">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type='password'
@@ -96,7 +96,7 @@ export default function ProfileScreen() {
             ></Form.Control>
           </Form.Group>
 
-          <Form.Group controlId='ConfirmPassword'>
+          <Form.Group controlId='ConfirmPassword' className="profilescreen-confirmpassord">
             <Form.Label> Confirm Password</Form.Label>
             <Form.Control
               type='password'
@@ -104,57 +104,80 @@ export default function ProfileScreen() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             ></Form.Control>
-          </Form.Group>
+          </Form.Group> */}
 
-          <Button type='submit' variant='primary'>
-            Update
-          </Button>
-        </Form>
-      </Col>
+            {/* <div className='profilescreen-btn-div'>
+              <Button
+                className='profilescreen-btn'
+                type='submit'
+                variant='primary'
+              >
+                Update
+              </Button> */}
+            {/* </div> */}
+          </Form>
+        </Col>
 
-      <Col md={9}>
-        <h2>My Orders</h2>
-        {loadingOrders ? (
-          <Loader />
-        ) : errorOrders ? (
-          <Message>{errorOrders}</Message>
-        ) : (
-          <Table striped bordered hover responsive className='table-sm'>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>DATE</th>
-                <th>TOTAL</th>
-                <th>PAID</th>
-                <th>DELIVERED</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>{order.totalPrice}</td>
-                  <td>
-                    {order.isPaid ? (order.paidAt ? order.paidAt.substring(0, 10) : 'N/A') : <p>No</p>}
-                  </td>
-                  <td>
-                   {order.isDelivered ? (order.deliveredAt ? order.deliveredAt.substring(0,10): 'N/A'):<p>No</p>}
-                  </td>
-                  <td>
-                    <LinkContainer to={`/order/${order._id}`}>
-                      <Button variant='light' className='btn-sm'>
-                        Details
-                      </Button>
-                    </LinkContainer>
-                  </td>
+        <Col md={9}>
+          <h2 className="profilescreen-order-title">My Orders</h2>
+          {loadingOrders ? (
+            <Loader />
+          ) : errorOrders ? (
+            <Message>{errorOrders}</Message>
+          ) : (
+            <Table striped bordered hover responsive className='table-sm'>
+              <thead>
+                <tr className="profilescreen-order-head">
+                  <th>ID</th>
+                  <th>DATE</th>
+                  <th>TOTAL</th>
+                  <th>PAID</th>
+                  <th>DELIVERED</th>
+                  <th></th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
-        )}
-      </Col>
-    </Row>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order._id} className="profilescreen-order-row">
+                    <td>{order._id}</td>
+                    <td>{order.createdAt.substring(0, 10)}</td>
+                    <td>{order.totalPrice}</td>
+                    <td>
+                      {order.isPaid ? (
+                        order.paidAt ? (
+                          order.paidAt.substring(0, 10)
+                        ) : (
+                          "N/A"
+                        )
+                      ) : (
+                        <p>No</p>
+                      )}
+                    </td>
+                    <td>
+                      {order.isDelivered ? (
+                        order.deliveredAt ? (
+                          order.deliveredAt.substring(0, 10)
+                        ) : (
+                          "N/A"
+                        )
+                      ) : (
+                        <p>No</p>
+                      )}
+                    </td>
+                    <td>
+                      <LinkContainer to={`/order/${order._id}`}>
+                        <Button variant='danger' className='btn-sm rounded'>
+                          Details
+                        </Button>
+                      </LinkContainer>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
+        </Col>
+      </Row>
+    </div>
   )
 }

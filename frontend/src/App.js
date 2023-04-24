@@ -24,7 +24,7 @@ function App() {
   return (
     <>
       <Header />
-      <main className='py-4'>
+      <main className='main'>
         <Container>
           <Routes>
             <Route path="/order/:id" Component={OrderScreen}/>

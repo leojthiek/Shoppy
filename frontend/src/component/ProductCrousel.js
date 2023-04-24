@@ -17,17 +17,17 @@ export default function ProductCrousel() {
   return (
     <Carousel pause='hover' className='carousel' indicators={false} controls={false} >
       {products && products.map((product) => (
-        <Carousel.Item key={product._id}>
+        <Carousel.Item key={product._id} className="carousel-item">
           <Link to={`/product/${product._id}`}>
             <Image
-              src={product.image}
+              src={product.images[0]}
               alt={product.name}
-              className='crousel-image'
+              className='carousel-image'
               fluid
             ></Image>
-            <div className='crousel-empty-div'></div>
+            <div className='carousel-empty-div'></div>
             <Carousel.Caption className='carousel-caption'>
-              <h2 className='crousel-text'>
+              <h2 className='carousel-text'>
                 {product.name} Rs-{product.price}
               </h2>
             </Carousel.Caption>

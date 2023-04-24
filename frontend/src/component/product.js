@@ -6,12 +6,12 @@ export default function product({ product }) {
   return (
     <Card className=' rounded h-100'>
       <Link to ={`/product/${product._id}`}>
-        <Card.Img className='product-image' src={product.image} variant='top' />
+        <Card.Img className='product-image' src={product.images[0]} variant='top' />
       </Link>
-      <Card.Body>
+      <Card.Body className="card-body">
         <Link to={`/product/${product._id}`} style={{textDecoration:'none'}}>
           <Card.Text as='div'>
-            <strong>{product.name}</strong>
+            <strong className="card-title">{product.name}</strong>
           </Card.Text>
         </Link>
         <div className="py-2">

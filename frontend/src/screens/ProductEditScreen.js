@@ -29,7 +29,7 @@ export default function ProductEditScreen() {
   const [category, setCategory] = React.useState("")
   const [categoryValidator, setCategoryValidator] = React.useState("")
 
-  const [image, setImage] = React.useState("")
+  const [images, setImages] = React.useState("")
   // const [imageValidator, setImageValidator] = React.useState("")
 
   const [description, setDescription] = React.useState("")
@@ -59,7 +59,7 @@ export default function ProductEditScreen() {
         setPrice(product.price)
         setBrand(product.brand)
         setCategory(product.category)
-        setImage(product.image)
+        setImages(product.images)
         setDescription(product.description)
         setCountInStock(product.countInStock)
       }
@@ -70,7 +70,7 @@ export default function ProductEditScreen() {
     product.price,
     product.brand,
     product.category,
-    product.image,
+    product.images,
     product.description,
     product.countInStock,
     product._id,
@@ -112,7 +112,7 @@ export default function ProductEditScreen() {
         _id: productId,
         name,
         price,
-        image,
+        images,
         brand,
         category,
         description,
@@ -122,27 +122,38 @@ export default function ProductEditScreen() {
   }
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0]
-
-    if (file) {
-      TransformFile(file)
+    const files = e.target.files;
+  
+    if (files && files.length > 0) {
+      const fileList = Array.from(files);
+      TransformFiles(fileList);
     }
   }
+  
 
-  const TransformFile = (file) => {
-    const reader = new FileReader()
-
-    reader.readAsDataURL(file)
-    reader.onloadend = () => {
-      setImage(reader.result)
-    }
-  }
+  const TransformFiles = (files) => {
+    const readerPromises = files.map((file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+        reader.onerror = reject;
+      });
+    });
+  
+    Promise.all(readerPromises).then((fileDataArray) => {
+      setImages(fileDataArray);
+    });
+  };
+  
 
   return (
     <div className='product-edit-screen'>
       <Link
         to='/admin/productlist'
-        className='btn btn-danger rounded py-2 mt-3'
+        className='btn btn-danger rounded py-2 mt-5'
       >
         Go Back
       </Link>
@@ -222,14 +233,18 @@ export default function ProductEditScreen() {
               <Form.Control
                 className='edit-control-name'
                 type='file'
-                accept='image/jpeg, image/jpg, image/png'
+                multiple
+                accept='image/jpeg, image/jpg, image/png image/webp'
                 placeholder='Upload an Image'
                 onChange={handleImageUpload}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group>
-              <Image className='preview-image' src={image} />
+              {images && images.map((image,index)=>(
+              <Image key={index} className='preview-image' src={image} />
+
+              ))}
             </Form.Group>
 
             <Form.Group

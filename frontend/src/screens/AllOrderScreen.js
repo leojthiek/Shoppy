@@ -29,7 +29,7 @@ export default function AllOrderListScreen() {
 
   return (
     <>
-      <h1>Orders</h1>
+      <h1 className="orderlist-title">Orders list :</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -37,7 +37,7 @@ export default function AllOrderListScreen() {
       ) : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
-            <tr>
+            <tr className="orderlist-head">
               <td>ID</td>
               <td>USER</td>
               <td>DATE</td>
@@ -50,7 +50,7 @@ export default function AllOrderListScreen() {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr key={order._id}>
+              <tr key={order._id} className="orderlist-row">
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
 

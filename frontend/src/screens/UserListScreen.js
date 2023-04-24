@@ -39,7 +39,7 @@ export default function UserListScreen() {
 
   return (
     <>
-      <h1>Users</h1>
+      <h1 className="userlist-title">Users :</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -47,7 +47,7 @@ export default function UserListScreen() {
       ) : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
-            <tr>
+            <tr className="userlist-head">
               <td>ID</td>
               <td>NAME</td>
               <td>EMAIL</td>
@@ -57,12 +57,12 @@ export default function UserListScreen() {
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user._id}>
+              <tr key={user._id} className="userlist-row">
                 <td>{user._id}</td>
                 <td>{user.name}</td>
 
                 <td>
-                  <a href={`mailto: ${user.email}`}>{user.email}</a>
+                  <a href={`mailto: ${user.email}`} style={{textDecoration:'none',color:'white'}}>{user.email}</a>
                 </td>
 
                 <td>

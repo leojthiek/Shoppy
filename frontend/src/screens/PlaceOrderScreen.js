@@ -12,7 +12,6 @@ export default function PlaceOrderScreen() {
 
   const cart = useSelector((state) => state.cart)
 
-
   function addDecimal(num) {
     return (Math.round(num * 100) / 100).toFixed(2)
   }
@@ -21,24 +20,21 @@ export default function PlaceOrderScreen() {
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   )
 
-  cart.shippingPrice = addDecimal(cart.itemsPrice ? 100 > 0 : 20)
+  cart.shippingPrice = addDecimal(cart.itemPrice > 500 ? 0 : 59)
 
-  cart.taxPrice = addDecimal(0.15 * cart.itemPrice)
-
-  cart.totalPrice =
-   addDecimal(Number(cart.itemPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice))
+  cart.totalPrice = addDecimal(
+    Number(cart.itemPrice) + Number(cart.shippingPrice)
+  )
 
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, error, success } = orderCreate
 
-React.useEffect(()=>{
-  if(success){
-    navigate(`/order/${order._id}`)
-  }
-},[navigate,order,success])
+  React.useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`)
+    }
+  }, [navigate, order, success])
 
-
- 
   const handleSubmit = () => {
     dispatch(
       orderCreateAction({
@@ -54,45 +50,53 @@ React.useEffect(()=>{
   }
 
   return (
-    <>
+    <div className='placeorderscreen-main'>
       <CheckoutSteps step1 step2 step3 step4 />
       <Row>
         <Col md={8}>
           <ListGroup variant='flush'>
-            <ListGroup.Item>
-              <h2>Shipping</h2>
+            <ListGroup.Item className='placeorderscreen-shipping'>
+              <h2 className='placeorderscreen-shipping-title'>Shipping</h2>
               <p>
                 <strong>Address : </strong>
                 {cart.shippingAddress.address},{cart.shippingAddress.city},
-                {cart.shippingAddress.postalCode},{cart.shippingAddress.country}
+                {cart.shippingAddress.country},{cart.shippingAddress.states},{" "}
+                {cart.shippingAddress.pincode},
               </p>
             </ListGroup.Item>
 
-            <ListGroup.Item>
-              <h2>Payment Method</h2>
+            <ListGroup.Item className='placeorderscreen-payment'>
+              <h2 className='placeorderscreen-payment-title'>Payment Method</h2>
               <strong>Method :</strong>
               {cart.paymentMethod}
             </ListGroup.Item>
 
-            <ListGroup.Item>
-              <h2>Order Items</h2>
+            <ListGroup.Item className='placeorderscreen-order'>
+              <h2 className='placeorderscreen-order-title'>Order Items</h2>
               {cart.cartItems.length === 0 ? (
                 <Message>Your Cart is empty</Message>
               ) : (
                 <ListGroup variant='flush'>
                   {cart.cartItems.map((item, index) => (
-                    <ListGroup.Item key={index}>
+                    <ListGroup.Item
+                      key={index}
+                      className='placeorderscreen-items'
+                    >
                       <Row>
                         <Col md={1}>
                           <Image
-                            src={item.image}
+                            src={item.image[0]}
                             alt={item.name}
                             fluid
                             rounded
                           />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`} style={{textDecoration:'none'}}>
+                          <Link
+                            to={`/product/${item.product}`}
+                            style={{ textDecoration: "none" }}
+                            className='placeorderscreen-name'
+                          >
                             {item.name}
                           </Link>
                         </Col>
@@ -110,47 +114,40 @@ React.useEffect(()=>{
         </Col>
 
         <Col md={4}>
-          <Card>
+          <Card className="placeorderscreen-card">
             <ListGroup variant='flush'>
-              <ListGroup.Item>
-                <h2>Order Summary</h2>
+              <ListGroup.Item className='placeorderscreen-summary'>
+                <h2 className="placeorderscreen-summary-title">Order Summary</h2>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='placeorderscreen-summary'>
                 <Row>
                   <Col>Items</Col>
                   <Col>Rs-{cart.itemPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
-              <ListGroup.Item>
+              <ListGroup.Item className='placeorderscreen-summary'>
                 <Row>
                   <Col>Shipping Price</Col>
                   <Col>Rs-{cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
-              <ListGroup.Item>
-                <Row>
-                  <Col>Tax</Col>
-                  <Col>Rs-{cart.taxPrice}</Col>
-                </Row>
-              </ListGroup.Item>
-
-              <ListGroup.Item>
+              <ListGroup.Item className='placeorderscreen-summary'>
                 <Row>
                   <Col>Total</Col>
                   <Col>Rs-{cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
-              <ListGroup.Item>
+              <ListGroup.Item className='placeorderscreen-summary'>
                 {error && <Message variant='danger'>{error}</Message>}
               </ListGroup.Item>
 
-              <ListGroup.Item className='d-grid'>
+              <ListGroup.Item className='placeorderscreen-btn-div'>
                 <Button
                   type='button'
-                  className='btn-block'
+                  className='placeorderscreen-btn'
                   disabled={cart.cartItems === 0}
                   onClick={handleSubmit}
                 >
@@ -161,6 +158,6 @@ React.useEffect(()=>{
           </Card>
         </Col>
       </Row>
-    </>
+    </div>
   )
 }

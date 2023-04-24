@@ -25,17 +25,18 @@ export default function PaymentMethodScreen() {
   }
 
   return (
+    <div className="paymentscreen-main">
     <FormContainer>
       <CheckOutSteps step1 step2 step3 />
 
-      <h1>Payment Method</h1>
+      <h1 className="paymentscreen-title">Payment Method</h1>
 
       <Form onSubmit={handleSubmit}>
         <Form.Group>
-          <Form.Label as='legend'>Select Method</Form.Label>
+          <Form.Label as='legend' className="paymentscreen-title">Select Method</Form.Label>
 
           <Col>
-            <Form.Check
+            <Form.Check className="paymentscreen-radio"
               type='radio'
               label='Razorpay'
               id='Razorpay'
@@ -43,21 +44,24 @@ export default function PaymentMethodScreen() {
               name="paymentMethod"
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
-             <Form.Check
+             <Form.Check className="paymentscreen-radio"
               type='radio'
-              label='Stripe'
-              id='stripe'
-              value='stripe'
+              label='COD'
+              id='COD'
+              value='COD'
               name="paymentMethod"    
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
           </Col>
         </Form.Group>
-
-        <Button className='payment-btn' type='submit' variant='primary'>
+         <div className="paymentscreen-btn-div">
+         <Button className='paymentscreen-btn' type='submit' variant='primary'>
           continue
         </Button>
+         </div>
+       
       </Form>
     </FormContainer>
+    </div>
   )
 }

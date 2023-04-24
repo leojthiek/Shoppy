@@ -73,10 +73,10 @@ export default function ProductListScreen() {
   }
 
   return (
-    <>
+    <div className="product-list">
       <Row className='align-items-center'>
         <Col>
-          <h1>Products</h1>
+          <h4 className="product-list-title">Product list :</h4>
         </Col>
         <Col className='d-flex justify-content-end'>
           <Button className='my-3' onClick={createProducthandler}>
@@ -96,7 +96,7 @@ export default function ProductListScreen() {
         <>
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
-              <tr>
+              <tr className="product-list-head">
                 <td>ID</td>
                 <td>NAME</td>
                 <td>PRICE</td>
@@ -106,7 +106,7 @@ export default function ProductListScreen() {
             </thead>
             <tbody>
               {products.map((product) => (
-                <tr key={product._id}>
+                <tr key={product._id} className="product-list-row">
                   <td>{product._id}</td>
                   <td>{product.name}</td>
                   <td>Rs,{product.price}</td>
@@ -124,6 +124,7 @@ export default function ProductListScreen() {
                         <i className='fas fa-edit'></i>
                       </Button>
                     </LinkContainer>
+                    &nbsp;
                     <Button
                       variant='danger'
                       className='btn-sm'
@@ -139,6 +140,6 @@ export default function ProductListScreen() {
           <Paginate pages={pages} page={page} isAdmin={true}/>
         </>
       )}
-    </>
+    </div>
   )
 }

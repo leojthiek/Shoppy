@@ -101,25 +101,27 @@ export default function OrderScreen() {
     <Message variant='danger'>{error}</Message>
   ) : (
     <>
-      <h2>Order {order._id}</h2>
-      <Row>
+      <h2 className="orderscreen-id">Order {order._id}</h2>
+      <Row >
         <Col md={8}>
-          <ListGroup variant='flush'>
-            <ListGroup.Item>
+          <ListGroup variant='flush' >
+            <ListGroup.Item className="orderscreen-list-group">
               <h2>Shipping</h2>
               <p>
                 <strong>Name : </strong>
                 {order.user.name}
               </p>
               <p>
-                <a href={`mailto: ${order.user.email}`}style={{textDecoration:'none'}}>Email :{order.user.email}</a>
+                <a className="orderscreen-email" href={`mailto: ${order.user.email}`}style={{textDecoration:'none'}}>Email :{order.user.email}</a>
               </p>
 
               <p>
                 <strong>Address : </strong>
                 {order.shippingAddress.address},{order.shippingAddress.city},
-                {order.shippingAddress.postalCode},
                 {order.shippingAddress.country},
+                {order.shippingAddress.states},
+                {order.shippingAddress.pincode},
+
               </p>
               {order.isDelivered ? (
                 <Message variant='success'>{order.deliveredAt}</Message>
@@ -128,7 +130,7 @@ export default function OrderScreen() {
               )}
             </ListGroup.Item>
 
-            <ListGroup.Item>
+            <ListGroup.Item className="orderscreen-list-group">
               <h2>Payment Method</h2>
               <p>
                 <strong>Method : </strong>
@@ -141,25 +143,25 @@ export default function OrderScreen() {
               )}
             </ListGroup.Item>
 
-            <ListGroup.Item>
+            <ListGroup.Item className="orderscreen-list-group">
               <h2>Order Items</h2>
               {order.orderItem.length === 0 ? (
                 <Message>No Order Items</Message>
               ) : (
                 <ListGroup variant='flush'>
                   {order.orderItem.map((item, index) => (
-                    <ListGroup.Item key={index}>
+                    <ListGroup.Item key={index} className="orderscreen-list-group">
                       <Row>
                         <Col md={1}>
                           <Image
-                            src={item.image}
+                            src={item.image[0]}
                             alt={item.name}
                             fluid
                             rounded
                           />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`} style={{textDecoration:'none'}}>
+                          <Link to={`/product/${item.product}`} style={{textDecoration:'none'}} className="orderscreen-product-name">
                             {item.name}
                           </Link>
                         </Col>
@@ -176,44 +178,37 @@ export default function OrderScreen() {
           </ListGroup>
         </Col>
         <Col md={4}>
-          <Card>
+          <Card className="orderscreen-card-summary">
             <ListGroup variant='flush'>
-              <ListGroup.Item>
+              <ListGroup.Item className="orderscreen-list-group">
                 <h2>Order Summary</h2>
               </ListGroup.Item>
 
-              {/* i forgot to add itemPrice somewhere which is not present in the data base so i define itemprice seperately */}
-              <ListGroup.Item>
+              {/* i forgot to add itemPrice somewhere which is not present in the database so i define itemprice seperately */}
+              <ListGroup.Item className="orderscreen-list-group">
                 <Row>
                   <Col>Items</Col>
                   <Col> Rs {itemPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
-              <ListGroup.Item>
+              <ListGroup.Item className="orderscreen-list-group">
                 <Row>
                   <Col>Shipping Price</Col>
                   <Col> Rs {order.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
-              <ListGroup.Item>
-                <Row>
-                  <Col>Tax</Col>
-                  <Col> Rs {order.taxPrice}</Col>
-                </Row>
-              </ListGroup.Item>
-
-              <ListGroup.Item>
+              <ListGroup.Item className="orderscreen-list-group">
                 <Row>
                   <Col>Total</Col>
                   <Col>Rs {addDecimal(order.totalPrice)}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item className='d-grid'>
+              <ListGroup.Item className='orderscreen-pay-button'>
                 {loadingPay && <Loader/>}
                 {!order.isPaid ? (
-                  <Button onClick={handlePay}>Proceed to payment</Button>
+                  <Button className="orderscreen-btn" onClick={handlePay}>Proceed to payment</Button>
                 ) : (
                   ""
                 )}
@@ -224,8 +219,8 @@ export default function OrderScreen() {
                 userInfo.isAdmin &&
                 order.isPaid &&
                 !order.isDelivered && (
-                  <ListGroup.Item className='d-grid'>
-                    <Button type='button' onClick={deliverhandler}>
+                  <ListGroup.Item className='orderscreen-pay-button'>
+                    <Button className="orderscreen-btn" type='button' onClick={deliverhandler}>
                       Mark as Delivered
                     </Button>
                   </ListGroup.Item>
