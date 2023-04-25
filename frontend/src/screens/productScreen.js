@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, useParams } from "react-router-dom"
-import { Row, Col, Image, ListGroup, Card, Button, Form, Collapse } from "react-bootstrap"
+import { Row, Col, Image, ListGroup, Card, Button, Form } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Review from "../component/review"
 import ReactImageMagnify from "react-image-magnify"
@@ -12,10 +12,10 @@ import Loader from "../component/loader"
 import Message from "../component/message"
 import { PRODUCT_CREATE_REVIEWS_RESET } from "../redux/constant/productListConstant"
 
-
 export default function ProductScreen() {
   const [mainImage, setMainImage] = React.useState(null)
-  const[ showReviews,setShowReviews]=React.useState(false)
+  const [showAllReviews, setShowAllReviews] = React.useState(false)
+  const [isMobile,setIsMobile]=React.useState(false)
 
   const [rating, setRating] = React.useState(0)
   const [comment, setComment] = React.useState("")
@@ -24,10 +24,6 @@ export default function ProductScreen() {
   const params = useParams()
 
   const dispatch = useDispatch()
-
-  const toggleReviews=()=>{
-    setShowReviews(!showReviews)
-  }
 
   const productDetails = useSelector((state) => state.productDetails)
   const { error, loading, product } = productDetails
@@ -64,11 +60,23 @@ export default function ProductScreen() {
     setRating(0)
   }
 
+  const toggleShowAllReviews = () => {
+    setShowAllReviews(!showAllReviews)
+  }
+
+
   React.useEffect(() => {
     // set mainImage when product is defined
-    if (product && product.images && product.images.length > 0) {
+    if (product && product.images) {
       setMainImage(product.images[0])
     }
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1399);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [product])
 
   return (
@@ -89,10 +97,12 @@ export default function ProductScreen() {
                   {...{
                     smallImage: {
                       alt: product.name,
-                      isFluidWidth: false,
+                      isFluidWidth:isMobile,
                       src: mainImage,
                       width: 600,
-                      height: 400,
+                      height:isMobile ? undefined : 400,
+                      
+                      
                     },
                     largeImage: {
                       src: mainImage,
@@ -102,20 +112,13 @@ export default function ProductScreen() {
                     lensStyle: { backgroundColor: "rgba(0,0,0,.6)" },
                     shouldUsePositiveSpaceLens: true,
                     enlargedImageContainerDimensions: {
-                      width: "140%",
+                      width: "150%",
                       height: "180%",
                     },
                     enlargedImageContainerStyle: {
                       zIndex: 9999,
                     },
                     isHintEnabled: true,
-                    zoomTintFadeInSpeedInMs: 500,
-                    zoomTintFadeOutSpeedInMs: 500,
-                    zoomTintWidth: 100,
-                    zoomTintHeight: 100,
-                    zoomWidth: 546,
-                    zoomHeight: 369,
-                    zoomFactor: 2,
                     zoomLensStyle: { backgroundColor: "rgba(255,255,255,0.5)" },
                   }}
                 />
@@ -142,7 +145,7 @@ export default function ProductScreen() {
               </Row>
             </Col>
 
-            <Col md={3}>
+            <Col md={3} >
               <ListGroup variant='flush'>
                 <ListGroup.Item className='productscreen-details'>
                   <h3>{product.name}</h3>
@@ -205,7 +208,7 @@ export default function ProductScreen() {
                   )}
 
                   {/* display grid to keep the button in block */}
-                  <Link to={`/cart/${params.id}?qty=${qty}`}>
+                  <Link to={`/cart/${params.id}?qty=${qty}`} style={{textDecoration:'none'}}>
                     <ListGroup.Item className='productscreen-summary-btn'>
                       <Button
                         type='button'
@@ -232,25 +235,29 @@ export default function ProductScreen() {
                     <p>{review.comment}</p>
                   </ListGroup.Item>
                 ))}
+                {product.reviews.length > 3 && !showAllReviews && (
+                  <Button variant='link' onClick={toggleShowAllReviews}>
+                    {showAllReviews ? "Show less reviews" : "Show all reviews"}
+                  </Button>
+                )}
+               
+                {showAllReviews &&
+                  product.reviews.slice(3).map((review) => (
+                    <ListGroup.Item key={review._id}>
+                      <strong>{review.name}</strong>
+                      <Review value={review.rating} />
+                      <p>{review.createdAt?.substring(0, 10)}</p>
+                      <p>{review.comment}</p>
+                     
+                    </ListGroup.Item>
+                   
+                  ))}
+                   <Button variant="link" onClick={toggleShowAllReviews}>
+                      {showAllReviews && 'show less reviews'}
+                    </Button> 
+                  
+                
                 <ListGroup.Item>
-                  {product.reviews.length > 3 && (
-                    <>
-                    <Button onClick={toggleReviews} variant="link">
-                      {showReviews ? 'Hide' : 'See More Reviews'}
-                    </Button>
-                    <Collapse in={showReviews}></Collapse>
-                     <ListGroup variant="flush">
-                      {product.reviews.slice(3).map((review)=>(
-                         <ListGroup.Item key={review._id}>
-                         <strong>{review.name}</strong>
-                         <Review value={review.rating} />
-                         <p>{review.createdAt?.substring(0, 10)}</p>
-                         <p>{review.comment}</p>
-                       </ListGroup.Item>
-                      ))}
-                     </ListGroup>
-                    </>
-                  )}
                   <h2>Write a Review</h2>
                   {errorProductReviews && (
                     <Message variant='danger'>{errorProductReviews}</Message>

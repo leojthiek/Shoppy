@@ -51,7 +51,7 @@ export default function UserEditScreen() {
 
   return (
     <div className="user-edit-screen">
-      <Link to='/admin/userlist' className='user-goBack-btn'>
+      <Link to='/admin/userlist' className='btn btn-dark rounded'>
         Go Back
       </Link>
       <FormContainer>

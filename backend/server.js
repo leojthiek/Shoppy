@@ -94,6 +94,7 @@ passport.use(
           const user = await User.create({
             googleId: profile.id,
             name: profile.displayName,
+            email:profile.emails[0].value
           });
           done(null, user);
         }
@@ -122,7 +123,7 @@ passport.deserializeUser((id, done) => {
 // Route to initiate the Google sign-in flow
 app.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
+  passport.authenticate("google", { scope: ["profile",'email'] })
 );
 
 // Route to handle the Google callback and redirect to client-side login
@@ -141,6 +142,7 @@ app.get("/api/auth/user", (req, res) => {
     const user=req.user
     res.json({
       id:user. _id,
+      email:user.emails[0].value,
       googleId:user.googleId,
       name:user.name,
       token: generateToken(user._id),
