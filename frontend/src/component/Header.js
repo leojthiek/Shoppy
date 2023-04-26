@@ -38,7 +38,7 @@ export default function Header() {
                   <div className='header-cart-icon'>
                     <i className='fas fa-shopping-cart'></i>
                     <span className='header-cart-no'>
-                      {cartItems.reduce((acc, item) => acc + item.qty, 0)}
+                      {userInfo ? cartItems.reduce((acc, item) => acc + item.qty, 0):0}
                     </span>
                   </div>
                 
