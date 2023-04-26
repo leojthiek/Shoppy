@@ -67,11 +67,11 @@ app.post('/razorpay/pay/:id',async(req,res)=>{
   }
   try {
     const response=await razorpay.orders.create(options)
-    console.log(response)
     res.json({
       id:response.id,
       currency:response.currency,
       amount:response.amount,
+
     })
   } catch (error) {
     console.log(error)
@@ -142,7 +142,7 @@ app.get("/api/auth/user", (req, res) => {
     const user=req.user
     res.json({
       id:user. _id,
-      email:user.emails[0].value,
+      email:user.emails,
       googleId:user.googleId,
       name:user.name,
       token: generateToken(user._id),
