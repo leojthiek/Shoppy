@@ -124,7 +124,7 @@ export default function OrderScreen() {
 
               </p>
               {order.isDelivered ? (
-                <Message variant='success'>{order.deliveredAt}</Message>
+                <Message variant='success'>Delivered at :{order.deliveredAt}</Message>
               ) : (
                 <Message variant='danger'>Not Delivered</Message>
               )}
@@ -137,7 +137,7 @@ export default function OrderScreen() {
                 {order.paymentMethod}
               </p>
               {order.isPaid ? (
-                <Message variant='success'>paid at{order.paidAt}</Message>
+                <Message variant='success'>paid at :{order.paidAt}</Message>
               ) : (
                 <Message variant='danger'>Not Paid</Message>
               )}
