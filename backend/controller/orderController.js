@@ -9,13 +9,13 @@ const addOrderItems = asyncHandler(async (req, res) => {
     itemPrice,
     shippingPrice,
     totalPrice,
-    taxPrice,
   } = req.body
 
   if (orderItem && orderItem.length === 0) {
     res.status(400)
     throw new Error("no order items")
-  } else {
+  }
+
     const order = new Order({
       orderItem,
       user: req.user._id,
@@ -24,12 +24,12 @@ const addOrderItems = asyncHandler(async (req, res) => {
       itemPrice,
       shippingPrice,
       totalPrice,
-      taxPrice,
     })
     const createdOrder = await order.save()
     res.status(201).json(createdOrder)
-  }
+
 })
+
 const getOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id).populate(
     "user",

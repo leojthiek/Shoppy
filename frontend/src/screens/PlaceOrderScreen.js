@@ -38,13 +38,13 @@ export default function PlaceOrderScreen() {
   const handleSubmit = () => {
     dispatch(
       orderCreateAction({
+        
         orderItem: cart.cartItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
         itemPrice: cart.itemPrice,
         shippingPrice: cart.shippingPrice,
         totalPrice: cart.totalPrice,
-        taxPrice: cart.taxPrice,
       })
     )
   }
