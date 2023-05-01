@@ -342,13 +342,17 @@ h2{
   text-decoration: none;
 }
 
-
-
 .productscreen-image-array{
   width: 70px;
   height: 60px;
   padding-bottom: 10px;
-  
+}
+.productscreen-review-title{
+  background-color: #c82333 ;
+  color: white;
+  text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 /* CART SCREEN  */
@@ -580,5 +584,37 @@ h2{
   align-items: center;
   padding-left: 10px;
 }
+
+
+/* ADD COUPON SCREEN  */
+
+.couponcreate-main{
+  background-color: rgb(100, 87, 87);
+  height: 80vh;
+  color: white;
+}
+
+.couponcreate-title{
+  text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: white;
+  background-color:#221d1e;
+
+}
+.couponcreate-btn-div{
+  margin-top: 20px;
+  display: grid;
+}
+
+.couponcreate-btn{
+  background-color:#b50920;
+  color: white;
+  border-radius: 10px;
+}
+.couponcreate-btn:hover{
+  background-color:#c82333;
+ 
+}
+
 
 

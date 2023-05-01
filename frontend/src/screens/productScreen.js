@@ -224,7 +224,7 @@ export default function ProductScreen() {
           </Row>
           <Row className='py-4'>
             <Col md={6}>
-              <h2>Reviews</h2>
+              <h2 className="productscreen-review-title">Reviews by customer</h2>
               {product.reviews.length === 0 && <Message>No Reviews</Message>}
               <ListGroup variant='flush'>
                 {product.reviews.slice(0, 3).map((review) => (

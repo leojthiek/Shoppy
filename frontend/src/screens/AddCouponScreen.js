@@ -1,5 +1,5 @@
 import React from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate ,Link} from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
 import FormContainer from "../component/formContainer"
 import { useSelector, useDispatch } from "react-redux"
@@ -67,9 +67,18 @@ export default function AddCouponScreen() {
   }
 
   return (
-    <div className=''>
+    <div className='couponcreate-main'>
+       <Link
+        to='/admin/coupons'
+        className='btn btn-dark rounded py-2 mt-3'
+      >
+        Go Back
+      </Link>
       <FormContainer>
-        <h1>Create a new Coupon</h1>
+        <div className="pt-4">
+        <h1 className="couponcreate-title">Create a new Coupon</h1>
+
+        </div>
 
         {loading ? (
           <Loader />
@@ -77,22 +86,22 @@ export default function AddCouponScreen() {
           <Message variant='danger'>{error}</Message>
         ) : (
           <Form onSubmit={handleSubmit}>
-            <Form.Group>
+            <Form.Group className="mt-4">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type='text'
-                placeholder='enter coupon name'
+                placeholder='Enter coupon name'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
             {nameValidate && <p className='coupon-validate'>{nameValidate}</p>}
 
-            <Form.Group>
+            <Form.Group className="mt-4">
               <Form.Label>Product</Form.Label>
               <Form.Control
                 type='text'
-                placeholder='enter Product ID'
+                placeholder='Enter Product ID'
                 value={product}
                 onChange={(e) => setProduct(e.target.value)}
               ></Form.Control>
@@ -101,7 +110,7 @@ export default function AddCouponScreen() {
               <p className='coupon-validate'>{productValidate}</p>
             )}
 
-            <Form.Group controlId='discountType'>
+            <Form.Group controlId='discountType' className="mt-4">
               <Form.Label>Discount type</Form.Label>
               <Form.Select
                 value={discountType}
@@ -116,7 +125,7 @@ export default function AddCouponScreen() {
               <p className='coupon-validate'>{discountTypeValidate}</p>
             )}
 
-            <Form.Group>
+            <Form.Group className="mt-4">
               <Form.Label>Discount Amount or Percentage</Form.Label>
               <Form.Control
                 type='text'
@@ -129,7 +138,7 @@ export default function AddCouponScreen() {
               <p className='coupon-validate'>{discountAmountValidate}</p>
             )}
 
-            <Form.Group>
+            <Form.Group className="mt-4">
               <Form.Label>Expiration Date</Form.Label>
               <Form.Control
                 type='date'
@@ -141,8 +150,10 @@ export default function AddCouponScreen() {
             {expirationDateValidation && (
               <p className='coupon-validate'>{expirationDateValidation}</p>
             )}
+         <div className="couponcreate-btn-div">
+         <Button className="couponcreate-btn" type='submit'>Add Coupon</Button>
 
-            <Button type='submit'>Add Coupon</Button>
+         </div>
           </Form>
         )}
       </FormContainer>

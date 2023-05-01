@@ -23,7 +23,7 @@ export default function Header() {
 
   React.useEffect(()=>{
     dispatch(getCartItem())
-  },[])
+  },[dispatch])
 
   return (
     <header>

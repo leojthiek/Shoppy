@@ -34,7 +34,7 @@ export default function CouponScreen() {
   }, [dispatch, userInfo,deleteSuccess,success])
 
   const handleDelete=(id)=>{
-    if (window.confirm("Do you want to delete this product completely")) {
+    if (window.confirm("Do you want to delete this coupon completely")) {
         dispatch(deleteCouponAction(id))
   }
 }
