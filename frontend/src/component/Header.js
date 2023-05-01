@@ -1,5 +1,5 @@
 import React from "react"
-import { Nav, Navbar, Container, NavDropdown } from "react-bootstrap"
+import { Nav, Navbar, Container, NavDropdown, Image } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
@@ -18,6 +18,10 @@ export default function Header() {
     navigate("/login")
   }
 
+
+// using baseUrl because image logo got broken on admin page
+  const BaseUrl=window.location.origin
+
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
 
@@ -27,11 +31,15 @@ export default function Header() {
 
   return (
     <header>
-      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+      <Navbar variant='dark' expand='lg' collapseOnSelect className="custom-header">
         <Container>
+          <div className="header-title-logo">
+            <Image className="header-logo" src={`${BaseUrl}/images/logo.png`} alt="logo"></Image>
           <LinkContainer to='/'>
-            <Navbar.Brand>Shoppy</Navbar.Brand>
+            <Navbar.Brand className="header-title">STORE</Navbar.Brand>
           </LinkContainer>
+          </div>
+         
 
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>

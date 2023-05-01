@@ -191,6 +191,10 @@ h2{
   }
 
   /* HEADER SCREEN */
+ .custom-header{
+  height: 70px;
+  background-color: rgb(1, 25, 54);
+ }
   .header-cart-icon {
     position: relative;
   }
@@ -208,6 +212,17 @@ h2{
     color: white;
     font-size: 12px;
     border-radius: 50%;
+  }
+  .header-logo{
+    width: 35px;
+    height: 35px;
+  }
+  .header-title{
+   font-family:mosk;
+  }
+  .header-title-logo{
+    display: inline-flex;
+    gap: 9px;
   }
   
   
