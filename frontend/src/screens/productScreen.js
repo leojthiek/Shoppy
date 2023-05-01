@@ -106,8 +106,8 @@ export default function ProductScreen() {
                     },
                     largeImage: {
                       src: mainImage,
-                      width: 1200,
-                      height: 1200,
+                      width: 1250,
+                      height: 1450,
                     },
                     lensStyle: { backgroundColor: "rgba(0,0,0,.6)" },
                     shouldUsePositiveSpaceLens: true,

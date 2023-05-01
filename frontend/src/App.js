@@ -17,6 +17,8 @@ import UserEditScreen from "./screens/UserEditScreen"
 import ProductListScreen from "./screens/ProductListScreen"
 import ProductEditScreen from "./screens/ProductEditScreen"
 import AllOrderListScreen from "./screens/AllOrderScreen"
+import AddCouponScreen from "./screens/AddCouponScreen"
+import CouponScreen from "./screens/CouponScreen"
 
 
 
@@ -40,9 +42,10 @@ function App() {
             <Route path="/admin/userlist" Component={UserListScreen}/>
             <Route path="/admin/productlist" Component={ProductListScreen}exact/>
             <Route path="/admin/productlist/:pageNumber" Component={ProductListScreen}exact/>
-
             <Route path='/admin/product/:id/edit' Component={ProductEditScreen} />
             <Route path="/admin/orderlist" Component={AllOrderListScreen}/>
+            <Route path="/admin/coupons" Component={CouponScreen}/>
+            <Route path="/admin/coupon/create" Component={AddCouponScreen}/>
             <Route path='/search/:keyword' Component={HomeScreen} exact />
             <Route path='/page/:pageNumber' Component={HomeScreen} />
             <Route path='/search/:keyword/page/:pageNumber' Component={HomeScreen} exact />

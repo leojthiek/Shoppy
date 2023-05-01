@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { logout } from "../redux/action/userAction"
 import SearchBox from "./SearchBox"
+import {getCartItem} from '../redux/action/cartAction'
 
 export default function Header() {
   const dispatch = useDispatch()
@@ -19,6 +20,10 @@ export default function Header() {
 
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
+
+  React.useEffect(()=>{
+    dispatch(getCartItem())
+  },[])
 
   return (
     <header>
@@ -72,7 +77,11 @@ export default function Header() {
                   <LinkContainer to={"/admin/orderlist"}>
                     <NavDropdown.Item>Orders</NavDropdown.Item>
                   </LinkContainer>
+                  <LinkContainer to={"/admin/coupons"}>
+                    <NavDropdown.Item>Coupon</NavDropdown.Item>
+                  </LinkContainer>
                 </NavDropdown>
+                
               )}
             </Nav>
           </Navbar.Collapse>

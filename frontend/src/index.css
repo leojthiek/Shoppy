@@ -254,13 +254,13 @@ h2{
 
 /* PRODUCT LIST */
 .product-list-head{
-  color: rgb(195, 8, 8);
+  color:white;
   font-family: 'Courier New', Courier, monospace;
-
+  background-color: #c82333;
 }
 .product-list{
   height:60vh;
-  padding-top: 3rem;
+  padding-top: 2rem;
 }
 .product-list-row{
   color:white;
@@ -268,8 +268,13 @@ h2{
   
 }
 .product-list-title{
-  font-family: 'Courier New', Courier, monospace;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   color: white;
+  background: linear-gradient(to right,rgb(13, 13, 13),rgb(228, 221, 221));
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
 
 }
 
@@ -277,15 +282,19 @@ h2{
 
 .orderlist-title{
   color: white;
-  padding-top: 4rem;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: larger;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  background: linear-gradient(to right,rgb(13, 13, 13),rgb(228, 221, 221));
+  height: 50px;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
 
 }
 .orderlist-head{
-  color: #c82333;
+  color:white;
   font-family: 'Courier New', Courier, monospace;
-
+  background-color: #c82333;
 }
 .orderlist-row{
   color: white;
@@ -385,15 +394,18 @@ h2{
 /* USERLIST SCREEN */
 
 .userlist-title{
-  font-family: 'Courier New', Courier, monospace;
-  color: white;
-  padding-top: 2rem;
-  font-size: larger;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+  font-size:22px;
+  background: linear-gradient(to right,rgb(13, 13, 13),rgb(228, 221, 221));
+  height: 50px;
+  align-items: center;
+  padding-left: 10px;
 }
 .userlist-head{
-  color: #c82333;
+  color:white;
   font-family: 'Courier New', Courier, monospace;
-  
+  background-color: #c82333;
 }
 .userlist-row{
   color: white;
@@ -407,6 +419,7 @@ h2{
 .paymentscreen-title{
   color: white;
   font-family: 'Courier New', Courier, monospace;
+  
 
 }
 .paymentscreen-radio{
@@ -485,6 +498,19 @@ h2{
 .placeorderscreen-card{
   box-shadow: 15px 15px;
 }
+.placeorderscreen-coupon-main{
+  display:flex;
+}
+.placeorderscreen-coupon-btn{
+  background-color: #b50920;
+}
+.placeorderscreen-coupon-btn:hover{
+  background-color: #e42b44;
+}
+.placeorderscreen-coupon{
+  background-color: #2a2020;
+}
+
 
 
 /* PROFILE SCREEN  */
@@ -529,4 +555,30 @@ h2{
   text-align: center;
   padding-top: 100px;
 }
+
+/* COUPON SCREEN */
+
+.coupon-validate{
+  color: red;
+}
+
+.couponscreen-table-head{
+  background-color: #c82333;
+  color: white;
+}
+.couponscreen-table-main{
+  background-color: white;
+  color: black;
+}
+.couponscreen-title{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: white;
+  display: flex;
+  margin-top: 30px;
+  background: linear-gradient(to right,rgb(13, 13, 13),rgb(228, 221, 221));
+  height: 50px;
+  align-items: center;
+  padding-left: 10px;
+}
+
 

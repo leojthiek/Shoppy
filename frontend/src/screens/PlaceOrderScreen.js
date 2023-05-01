@@ -1,12 +1,17 @@
 import React from "react"
-import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap"
+import { Button, Row, Col, ListGroup, Image, Card, Form } from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
 import Message from "../component/message"
 import CheckoutSteps from "../component/checkoutSteps"
 import { Link, useNavigate } from "react-router-dom"
 import { orderCreateAction } from "../redux/action/orderAction"
+import { applyCouponAction } from "../redux/action/couponAction"
+import Loader from "../component/loader"
 
 export default function PlaceOrderScreen() {
+  const [name, setName] = React.useState("")
+  const [validateCoupon,setValidateCoupon]=React.useState('')
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -15,6 +20,9 @@ export default function PlaceOrderScreen() {
   function addDecimal(num) {
     return (Math.round(num * 100) / 100).toFixed(2)
   }
+
+  const applyCoupon = useSelector((state) => state.applyCoupon)
+  const { loading: loadingCoupon, error: errorCoupon, coupon } = applyCoupon
 
   cart.itemPrice = addDecimal(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
@@ -29,6 +37,16 @@ export default function PlaceOrderScreen() {
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, error, success } = orderCreate
 
+  if (coupon) {
+    if (coupon.discountType === "percentage") {
+      cart.totalPrice = addDecimal(
+        cart.totalPrice - (cart.totalPrice * coupon.discountAmount) / 100
+      )
+    } else if (coupon.discountType === "fixed") {
+      cart.totalPrice = addDecimal(cart.totalPrice - coupon.discountAmount)
+    }
+  }
+
   React.useEffect(() => {
     if (success) {
       navigate(`/order/${order._id}`)
@@ -38,7 +56,6 @@ export default function PlaceOrderScreen() {
   const handleSubmit = () => {
     dispatch(
       orderCreateAction({
-        
         orderItem: cart.cartItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
@@ -47,6 +64,23 @@ export default function PlaceOrderScreen() {
         totalPrice: cart.totalPrice,
       })
     )
+  }
+
+
+  const handleCoupon = (e) => {
+    e.preventDefault()
+
+
+  
+    if(!coupon){
+      if (window.confirm("Please confirm,Once coupon applied cannot be undone")) {
+        dispatch(applyCouponAction(name))
+        setName('')
+          
+      }
+  
+    
+    }
   }
 
   return (
@@ -114,10 +148,12 @@ export default function PlaceOrderScreen() {
         </Col>
 
         <Col md={4}>
-          <Card className="placeorderscreen-card">
+          <Card className='placeorderscreen-card'>
             <ListGroup variant='flush'>
               <ListGroup.Item className='placeorderscreen-summary'>
-                <h2 className="placeorderscreen-summary-title">Order Summary</h2>
+                <h2 className='placeorderscreen-summary-title'>
+                  Order Summary
+                </h2>
               </ListGroup.Item>
               <ListGroup.Item className='placeorderscreen-summary'>
                 <Row>
@@ -132,6 +168,26 @@ export default function PlaceOrderScreen() {
                   <Col>Rs-{cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
+              {coupon && (
+                <ListGroup.Item className='placeorderscreen-summary'>
+                  <Row>
+                    <Col>
+                      Coupon Applied (
+                      {coupon.discountType === "fixed"
+                        ? `Rs-${coupon.discountAmount}`
+                        : `${coupon.discountAmount}%`}
+                      )
+                    </Col>
+                    <Col>
+                      
+                      {coupon.discountType === "percentage"
+                        ? addDecimal((cart.itemPrice * coupon.discountAmount) / 100)
+                        : coupon.discountAmount}
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              )}
+           
 
               <ListGroup.Item className='placeorderscreen-summary'>
                 <Row>
@@ -153,6 +209,28 @@ export default function PlaceOrderScreen() {
                 >
                   Place Order
                 </Button>
+              </ListGroup.Item>
+            </ListGroup>
+
+            {loadingCoupon && <Loader />}
+            {errorCoupon && <Message variant='danger'>{errorCoupon}</Message>}
+            <ListGroup >
+              <ListGroup.Item className="placeorderscreen-coupon">
+                <Form onSubmit={handleCoupon} >
+                  <Form.Label style={{color:'white'}}>Enter Coupon Code Here</Form.Label>
+                  <div className="placeorderscreen-coupon-main">
+                  <Form.Control 
+                    type='input'
+                    style={{ backgroundColor: "white", color: "black" }}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  ></Form.Control>
+                  <Button type='submit' className='placeorderscreen-coupon-btn'>
+                    Apply
+                  </Button>
+                  </div>
+                 
+                </Form>
               </ListGroup.Item>
             </ListGroup>
           </Card>

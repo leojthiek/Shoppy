@@ -27,6 +27,7 @@ import {
 
 import { orderCreateReducers , orderDetailsReducer,orderPayReducer,orderListMyReducer,allOrdersReducer,orderDeliverReducer} from "./reducers/orderReducer"
 
+import { addCouponReducer, couponListReducer ,couponDeleteReducer, getCouponReducer, applyCouponReducer} from "./reducers/couponReducer"
 // const cartItemsFromStorage = localStorage.getItem("cartItems")
 //   ? JSON.parse(localStorage.getItem("cartItems"))
 //   : []
@@ -69,6 +70,11 @@ const reducer = combineReducers({
   orderListMy:orderListMyReducer,
   allOrders:allOrdersReducer,
   orderDeliver:orderDeliverReducer,
+  addCoupon:addCouponReducer,
+  couponList:couponListReducer,
+  couponDelete:couponDeleteReducer,
+  getCoupon:getCouponReducer,
+  applyCoupon:applyCouponReducer,
   
 
 })

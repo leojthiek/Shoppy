@@ -94,7 +94,7 @@ export default function ProductListScreen() {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          <Table striped bordered hover responsive className='table-sm'>
+          <Table bordered hover responsive className='table-sm'>
             <thead>
               <tr className="product-list-head">
                 <td>ID</td>
@@ -102,6 +102,7 @@ export default function ProductListScreen() {
                 <td>PRICE</td>
                 <td>CATEGORY</td>
                 <td>BRAND</td>
+                <td></td>
               </tr>
             </thead>
             <tbody>

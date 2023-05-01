@@ -39,13 +39,16 @@ export default function UserListScreen() {
 
   return (
     <>
-      <h1 className="userlist-title">Users :</h1>
+    <div className="pt-4">
+    <h1 className="userlist-title">Users :</h1>
+
+    </div>
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Table striped bordered hover responsive className='table-sm'>
+        <Table  bordered hover responsive className='table-sm'>
           <thead>
             <tr className="userlist-head">
               <td>ID</td>

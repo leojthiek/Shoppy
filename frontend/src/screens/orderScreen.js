@@ -21,6 +21,9 @@ export default function OrderScreen() {
   const cart = useSelector((state) => state.cart)
   const {cartItems}=cart
 
+  const applyCoupon = useSelector((state) => state.applyCoupon)
+  const { coupon } = applyCoupon
+
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
@@ -198,6 +201,26 @@ export default function OrderScreen() {
                   <Col> Rs {order.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
+
+              {coupon && (
+                <ListGroup.Item className='placeorderscreen-summary'>
+                  <Row>
+                    <Col>
+                      Coupon Applied (
+                      {coupon.discountType === "fixed"
+                        ? `Rs-${coupon.discountAmount}`
+                        : `${coupon.discountAmount}%`}
+                      )
+                    </Col>
+                    <Col>
+                      
+                      {coupon.discountType === "percentage"
+                        ? addDecimal((cart.itemPrice * coupon.discountAmount) / 100)
+                        : coupon.discountAmount}
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              )}
 
               <ListGroup.Item className="orderscreen-list-group">
                 <Row>
