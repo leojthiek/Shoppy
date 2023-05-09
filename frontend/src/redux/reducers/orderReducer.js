@@ -116,6 +116,27 @@ export const allOrdersReducer = (state ={orders:[]}, action) => {
   }
 }
 
+export const orderCountReducer = (state = {orderItem:{} }, action) => {
+  switch (action.type) {
+    case constant.ORDER_COUNT_REQUEST:
+      return {
+        loading: true,
+      }
+    case constant.ORDER_COUNT_SUCCESS:
+      return {
+        loading: false,
+        orderItem:action.payload
+      }
+    case constant.ORDER_COUNT_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
 
 export const orderDeliverReducer = (state = {}, action) => {
   switch (action.type) {

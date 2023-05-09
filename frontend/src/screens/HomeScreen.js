@@ -21,6 +21,9 @@ export default function HomeScreen() {
   const productList = useSelector((state) => state.productList)
   const { error, loading, products,page,pages} = productList
 
+  const getOffer = useSelector((state)=>state.getOffer)
+  const {offer} = getOffer
+
   React.useEffect(() => {
     dispatch(productListAction(keyword,pageNumber))
   }, [dispatch,keyword,pageNumber])
@@ -40,7 +43,7 @@ export default function HomeScreen() {
         <Row>
           {products.map((product) => (
             <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-              <Product product={product} />
+              <Product product={product} offer={offer}/>
             </Col>
           ))}
         </Row>

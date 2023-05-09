@@ -1,11 +1,12 @@
 import React from "react"
 import { useNavigate ,Link} from "react-router-dom"
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, Row, Col } from "react-bootstrap"
 import FormContainer from "../component/formContainer"
 import { useSelector, useDispatch } from "react-redux"
 import Loader from "../component/loader"
 import Message from "../component/message"
 import { addCouponAction } from "../redux/action/couponAction"
+import AdminSidebar from "../component/adminSidebar"
 
 export default function AddCouponScreen() {
   const [name, setName] = React.useState("")
@@ -67,6 +68,13 @@ export default function AddCouponScreen() {
   }
 
   return (
+    <Row>
+      <Col md={2}>
+        <AdminSidebar/>
+      </Col>
+      <Col md={10}>
+
+      
     <div className='couponcreate-main'>
        <Link
         to='/admin/coupons'
@@ -158,5 +166,7 @@ export default function AddCouponScreen() {
         )}
       </FormContainer>
     </div>
+    </Col>
+    </Row>
   )
 }

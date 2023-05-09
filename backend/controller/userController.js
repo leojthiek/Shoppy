@@ -163,4 +163,49 @@ const updateUser=asyncHandler(async(req,res)=>{
   }
 })
 
-export { authUser, getUserProfile,registerUser,updateUserProfile,getUsers,deleteUser ,getUserById,updateUser}
+const countUsersToday = async (req, res) => {
+  try {
+    const today = new Date();
+    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59, 999);
+
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
+
+    const startOfPrevMonth = new Date(today.getFullYear(), today.getMonth() -1,1);
+    const endOfPrevMonth = new Date(today.getFullYear(), today.getMonth() , 0, 23, 59, 59, 999);
+
+    const userCountToday = await User.countDocuments({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay
+      }
+    });
+
+    const userCountMonth = await User.countDocuments({
+      createdAt: {
+        $gte: startOfMonth,
+        $lte: endOfMonth
+      }
+    });
+
+    const userCountPrevMonth = await User.countDocuments({
+      createdAt: {
+        $gte: startOfPrevMonth,
+        $lte: endOfPrevMonth
+      }
+    });
+
+    return res.json({ userCountToday,userCountMonth ,userCountPrevMonth});
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+}
+
+
+
+
+
+
+export { authUser, getUserProfile,registerUser,updateUserProfile,getUsers,deleteUser ,getUserById,updateUser,countUsersToday}

@@ -13,6 +13,7 @@ import {
   productUpdateReducer,
   productReviewsCreateReducer,
   productTopRatedReducer,
+  productCategoryReducer,
 } from "./reducers/productReducer"
 import { cartReducer } from "./reducers/cartReducer"
 import {
@@ -22,15 +23,30 @@ import {
   userProfileUpdateReducer,
   userListReducer,
   userDeleteReducer,
-  userUpdateReducer
+  userUpdateReducer,
+  userCountReducer,
 } from "./reducers/userReducer"
 
-import { orderCreateReducers , orderDetailsReducer,orderPayReducer,orderListMyReducer,allOrdersReducer,orderDeliverReducer} from "./reducers/orderReducer"
+import {
+  orderCreateReducers,
+  orderDetailsReducer,
+  orderPayReducer,
+  orderListMyReducer,
+  allOrdersReducer,
+  orderDeliverReducer,
+  orderCountReducer,
+} from "./reducers/orderReducer"
 
-import { addCouponReducer, couponListReducer ,couponDeleteReducer, getCouponReducer, applyCouponReducer} from "./reducers/couponReducer"
-// const cartItemsFromStorage = localStorage.getItem("cartItems")
-//   ? JSON.parse(localStorage.getItem("cartItems"))
-//   : []
+import {
+  addCouponReducer,
+  couponListReducer,
+  couponDeleteReducer,
+  getCouponReducer,
+  applyCouponReducer,
+} from "./reducers/couponReducer"
+
+import { createOfferReducer, getOfferReducer, offerDeleteReducer, offerListReducer, offerUpdateReducer } from "./reducers/offerReducer"
+import { razorpayBalanceCountReducer, razorpayBalanceReducer, razorpayMonthlyEarningReducer } from "./reducers/razorpayReducer"
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
@@ -51,32 +67,41 @@ const initialState = {
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
-  productDelete:deleteProductReducer,
-  productCreate:ProductCreateReducer,
-  productUpdate:productUpdateReducer,
-  productReviewsCreate:productReviewsCreateReducer,
-  productTopRated:productTopRatedReducer,
+  productDelete: deleteProductReducer,
+  productCreate: ProductCreateReducer,
+  productUpdate: productUpdateReducer,
+  productReviewsCreate: productReviewsCreateReducer,
+  productTopRated: productTopRatedReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdate: userProfileUpdateReducer,
-  userList:userListReducer,
-  userDelete:userDeleteReducer,
-  userEdit:userUpdateReducer,
-  orderCreate:orderCreateReducers,
-  orderDetails:orderDetailsReducer,
-  orderPay:orderPayReducer,
-  orderListMy:orderListMyReducer,
-  allOrders:allOrdersReducer,
-  orderDeliver:orderDeliverReducer,
-  addCoupon:addCouponReducer,
-  couponList:couponListReducer,
-  couponDelete:couponDeleteReducer,
-  getCoupon:getCouponReducer,
-  applyCoupon:applyCouponReducer,
-  
-
+  userList: userListReducer,
+  userDelete: userDeleteReducer,
+  userEdit: userUpdateReducer,
+  orderCreate: orderCreateReducers,
+  orderDetails: orderDetailsReducer,
+  orderPay: orderPayReducer,
+  orderListMy: orderListMyReducer,
+  allOrders: allOrdersReducer,
+  orderDeliver: orderDeliverReducer,
+  addCoupon: addCouponReducer,
+  couponList: couponListReducer,
+  couponDelete: couponDeleteReducer,
+  getCoupon: getCouponReducer,
+  applyCoupon: applyCouponReducer,
+  createOffer:createOfferReducer,
+  offerList:offerListReducer,
+  offerDelete:offerDeleteReducer,
+  getOffer:getOfferReducer,
+  offerUpdate:offerUpdateReducer,
+  razorpayBalance:razorpayBalanceReducer,
+  userCount:userCountReducer,
+  orderCount:orderCountReducer,
+  razorpayBalanceCount:razorpayBalanceCountReducer,
+  razorpayMonthlyEarning:razorpayMonthlyEarningReducer,
+  productCategory:productCategoryReducer,
 })
 const middleware = [thunk]
 

@@ -5,6 +5,7 @@ import { deleteCouponAction, getAllCoupons } from "../redux/action/couponAction"
 import { useSelector, useDispatch } from "react-redux"
 import Loader from "../component/loader"
 import Message from "../component/message"
+import AdminSidebar from "../component/adminSidebar"
 
 export default function CouponScreen() {
   const dispatch = useDispatch()
@@ -45,6 +46,11 @@ const handleClick=()=>{
 
 
   return (
+    <Row>
+      <Col md={2}>
+      <AdminSidebar/>
+      </Col>
+      <Col md={10}>
     <div className="coupon-main">
       <Row>
         <Col>
@@ -111,5 +117,7 @@ const handleClick=()=>{
         </Table>
       )}
     </div>
+    </Col>
+    </Row>
   )
 }

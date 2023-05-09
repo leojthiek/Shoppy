@@ -1,3 +1,5 @@
+import { lazy,Suspense } from "react"
+
 import Footer from "./component/Footer"
 import Header from "./component/Header"
 import { Container } from "react-bootstrap"
@@ -12,13 +14,23 @@ import PaymentMethodScreen from "./screens/paymentMethodScreen"
 import ProfileScreen from "./screens/profileScreen"
 import PlaceOrderScreen from "./screens/PlaceOrderScreen"
 import OrderScreen from "./screens/orderScreen"
-import UserListScreen from "./screens/UserListScreen"
 import UserEditScreen from "./screens/UserEditScreen"
-import ProductListScreen from "./screens/ProductListScreen"
 import ProductEditScreen from "./screens/ProductEditScreen"
-import AllOrderListScreen from "./screens/AllOrderScreen"
 import AddCouponScreen from "./screens/AddCouponScreen"
-import CouponScreen from "./screens/CouponScreen"
+import createOfferScreen from "./screens/CreateOfferScreen"
+import OfferEditScreen from "./screens/OfferEditScreen"
+
+const DashboardScreen = lazy(() => import('./screens/DashboardScreen'));
+const AllOrderListScreen = lazy(()=> import( "./screens/AllOrderScreen"))
+const OfferListScreen =lazy(()=> import("./screens/OfferListScreen")) 
+const ProductListScreen = lazy(()=>import("./screens/ProductListScreen")) 
+const CouponScreen = lazy(()=>import("./screens/CouponScreen")) 
+const UserListScreen = lazy(()=>import("./screens/UserListScreen")) 
+
+
+
+
+
 
 
 
@@ -28,6 +40,7 @@ function App() {
       <Header />
       <main className='main'>
         <Container>
+          <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/order/:id" Component={OrderScreen}/>
             <Route path="/placeorder" Component={PlaceOrderScreen}/>
@@ -46,13 +59,24 @@ function App() {
             <Route path="/admin/orderlist" Component={AllOrderListScreen}/>
             <Route path="/admin/coupons" Component={CouponScreen}/>
             <Route path="/admin/coupon/create" Component={AddCouponScreen}/>
+            <Route path="/admin/offers" Component={OfferListScreen}/>
+            <Route path="/admin/offer/create" Component={createOfferScreen}/>
+
+            <Route path="/admin/offer/:id" Component={OfferEditScreen}/>
             <Route path='/search/:keyword' Component={HomeScreen} exact />
             <Route path='/page/:pageNumber' Component={HomeScreen} />
             <Route path='/search/:keyword/page/:pageNumber' Component={HomeScreen} exact />
             <Route path='/' Component={HomeScreen} exact />
 
+            <Route path='/admin/dashboard' Component={DashboardScreen}/>
+            
+
+
+
+
 
           </Routes>
+          </Suspense>
         </Container>
       </main>
       <Footer />

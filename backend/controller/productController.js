@@ -164,6 +164,12 @@ const getTopProducts = asyncHandler(async (req, res) => {
 
   res.json(products)
 })
+
+const getCategory = asyncHandler(async (req, res) => {
+  const categories = await Product.distinct("category");
+  res.json(categories);
+});
+
 export {
   getProduct,
   getProductById,
@@ -172,4 +178,5 @@ export {
   updateProduct,
   createProductReviews,
   getTopProducts,
+  getCategory,
 }

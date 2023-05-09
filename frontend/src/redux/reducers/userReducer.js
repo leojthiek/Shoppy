@@ -164,3 +164,25 @@ export const userUpdateReducer = (state = {user:{} }, action) => {
       return state
   }
 }
+
+
+export const userCountReducer = (state = {user:{} }, action) => {
+  switch (action.type) {
+    case constant.USER_COUNT_REQUEST:
+      return {
+        loading: true,
+      }
+    case constant.USER_COUNT_SUCCESS:
+      return {
+        loading: false,
+        user:action.payload
+      }
+    case constant.USER_COUNT_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}

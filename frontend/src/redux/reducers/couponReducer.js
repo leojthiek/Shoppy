@@ -60,7 +60,6 @@ export const getCouponReducer = (
         coupon: {},
       }
     case constant.GET_COUPON_SUCCESS:
-      console.log(action.payload)
 
       return {
         loading: false,

@@ -46,6 +46,10 @@ export default function CartScreen() {
     
   }
 
+  function addDecimal(num) {
+    return Math.round((num * 100) / 100).toFixed(2)
+  }
+
   return (
     <Row>
       <h1 className="cartscreen-title">SHOPPING CART</h1>
@@ -65,7 +69,7 @@ export default function CartScreen() {
                   <Col md={3}>
                     <Link to={`/product/${item._id}`} className="cartscreen-name" style={{textDecoration:'none'}}>{item.name}</Link>
                   </Col>
-                  <Col className="cartscreen-price" md={2}>Rs-{item.price}</Col>
+                  <Col className="cartscreen-price" md={2}>{item.product.offerPrice ? <p>&#8377;{addDecimal(item.product.offerPrice)}</p>:<p>&#8377;{item.price}</p>}</Col>
                   <Col md={2}>
                     <Form.Select
                       value={item.qty}
@@ -107,9 +111,9 @@ export default function CartScreen() {
                 items
               </h2>
               Rs-{" "}
-              {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
-                .toFixed(2)}
+              {addDecimal(cartItems
+                .reduce((acc, item) => acc + item.qty *( item.product.offerPrice ? item.product.offerPrice : item.price), 0)
+                )}
             </ListGroup.Item>
               {cartItems.length > 0 &&  <ListGroup.Item className='cartscreen-btn-div'>
               <Link to={`/login?redirect=shipping`} className="d-grid" style={{textDecoration:'none'}}>

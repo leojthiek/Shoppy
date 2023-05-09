@@ -40,7 +40,7 @@ export default function OrderScreen() {
     return Math.round((num * 100) / 100).toFixed(2)
   }
   const itemPrice = addDecimal(
-    cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    cartItems.reduce((acc, item) => acc + (item.product.offerPrice ? item.product.offerPrice * item.qty : item.price * item.qty), 0)
   )
 
   const deliverhandler = () => {
@@ -78,15 +78,15 @@ export default function OrderScreen() {
     const { data } = await axios.post(`/razorpay/pay/${orderId}`)
 
     const options = {
-      key: "rzp_test_DpEiARQNa3GZlP",
+      key: "rzp_test_77sc1hq8zmktMP",
       currency: data.currency,
       amount: data.amount.toString(),
       name: "Shoppy",
       description: "Testing Transaction",
       image: "",
       order_id: data.id,
-      handler: function () {
-         dispatch(orderToPayAction(orderId))
+      handler: function (response) {
+         dispatch(orderToPayAction(orderId,response.razorpay_payment_id))
       },
       prefill: {
         name: "leoj",
@@ -168,10 +168,7 @@ export default function OrderScreen() {
                             {item.name}
                           </Link>
                         </Col>
-                        <Col md={4}>
-                          {item.qty} x Rs-{item.price} = Rs{" "}
-                          {addDecimal(`${item.qty * item.price}`)}
-                        </Col>
+                       
                       </Row>
                     </ListGroup.Item>
                   ))}
@@ -191,7 +188,7 @@ export default function OrderScreen() {
               <ListGroup.Item className="orderscreen-list-group">
                 <Row>
                   <Col>Items</Col>
-                  <Col> Rs {itemPrice}</Col>
+                  <Col> &#8377; {itemPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
@@ -225,7 +222,7 @@ export default function OrderScreen() {
               <ListGroup.Item className="orderscreen-list-group">
                 <Row>
                   <Col>Total</Col>
-                  <Col>Rs {addDecimal(order.totalPrice)}</Col>
+                  <Col>&#8377; {addDecimal(order.totalPrice)}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item className='orderscreen-pay-button'>

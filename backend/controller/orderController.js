@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler"
 import Order from "../models/orderModel.js"
+import Razorpay from "razorpay"
 
 const addOrderItems = asyncHandler(async (req, res) => {
   const {
@@ -49,6 +50,7 @@ const updateOrderToPay = asyncHandler(async (req, res) => {
   if(order){
     order.isPaid=true,
     order.paidAt=Date.now()
+   order.paymentId = req.body.paymentId
   
     await order.save();
     res.status(200).json('Payment Success')
@@ -60,6 +62,8 @@ const updateOrderToPay = asyncHandler(async (req, res) => {
   
     
 })
+
+
 
 //  get logged in user order
 
@@ -98,6 +102,48 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
   }
 })
 
+
+const ordersCount = async (req, res) => {
+  try {
+    const today = new Date();
+    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59, 999);
+
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
+
+    const startOfPrevMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    const endOfPrevMonth = new Date(today.getFullYear(), today.getMonth(), 0, 23, 59, 59, 999);
+    
+
+    const orderCountToday = await Order.countDocuments({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay
+      }
+    });
+
+    const orderCountMonth = await Order.countDocuments({
+      createdAt: {
+        $gte: startOfMonth,
+        $lte: endOfMonth
+      }
+    });
+
+    const orderCountPrevMonth = await Order.countDocuments({
+      createdAt: {
+        $gte: startOfPrevMonth,
+        $lte: endOfPrevMonth
+      }
+    });
+
+    return res.json({ orderCountToday,orderCountMonth,orderCountPrevMonth});
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+}
+
 export {
   updateOrderToPay,
   getOrderById,
@@ -105,4 +151,5 @@ export {
   getMyOrder,
   getAllOrder,
   updateOrderToDelivered,
+  ordersCount
 }

@@ -89,7 +89,6 @@ const getAllCoupons=asyncHandler(async(req,res)=>{
 // @access PRIVATE/ADMIN
 
 const getCouponById = asyncHandler(async (req, res) => {
-  console.log(req.params.id)
     const coupon = await Coupon.findById(req.params.id)
     if (coupon) {
       res.json(coupon)

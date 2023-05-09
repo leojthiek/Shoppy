@@ -1,5 +1,6 @@
+
 main{
-  min-height: 80vh;
+  min-height: 90vh;
 }
 .navlist-header{
   margin-left: auto;
@@ -50,6 +51,7 @@ h2{
   height: 100px;
   padding-bottom: 20px;
   margin-left: 6px;
+  object-fit:contain;
 
 }
 .box{
@@ -631,5 +633,194 @@ h2{
  
 }
 
+/* ADMIN DASHBOARD SCREEN */
+.dashboard-screen{
+  display: flex;
+  background-color:rgb(236, 230, 230);
+  min-height: 90vh;
+}
+
+.dashboard-widget{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  gap: 20px;
+  height: fit-content;
+
+}
+.sidebar-menu{
+ width: 60px;
+ height: 20px;
+ font-size: 10px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ margin-top: 20px;
+ 
+}
+.sidebar-col{
+  height:auto;
+}
+.dashboard-progress{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  gap: 20px;
+}
 
 
+/* ADMIN SIDEBAR */
+
+
+.sidebar-center ul{
+  list-style: none;
+  row-gap: 10px;
+
+}
+.sidebar-center-p{
+  padding-top: 20px;
+  padding-bottom: 2px;
+  font-size: 14px;
+  font-weight: 700;
+  color:gray;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.sidebar-center li{
+  margin-bottom: 10px;
+  color:rgb(250, 244, 250);
+  cursor: pointer;
+}
+.sidebar-center li:hover{
+  background-color:rgba(81, 80, 81, 0.277);
+}
+.sidebar-center span{
+  padding-left: 5px;
+  color: purple;
+}
+.sidebar-icon{
+  color: purple;
+}
+.sidebar-large{
+  height:50vh;
+  background-color:white;
+  border-right: 1px solid rgb(222, 216, 227);
+  -webkit-box-shadow: 7px 6px 8px -3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 7px 6px 8px -3px rgba(0,0,0,0.75);
+  box-shadow: 7px 6px 8px -3px rgba(0,0,0,0.75);
+}
+.sidebar{
+  height:50vh;
+  background-color:white;
+  border-right: 1px solid rgb(222, 216, 227);
+  -webkit-box-shadow: 7px 6px 8px -3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 7px 6px 8px -3px rgba(0,0,0,0.75);
+  box-shadow: 7px 6px 8px -3px rgba(0,0,0,0.75);
+}
+
+/* WIDGET CARD SCREEN */
+.widget-card{
+  width: 250px;
+  height: 150px;
+  -webkit-box-shadow: 7px 6px 8px -3px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 6px 8px -3px rgba(0,0,0,0.75);
+box-shadow: 7px 6px 8px -3px rgba(0,0,0,0.75);
+border-radius: 5px;
+  
+}
+.widget-body{
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  color: gray;
+}
+.left-widget{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.widget-list{
+  text-decoration: none;
+}
+.widget-amount{
+  font-size: 24px;
+}
+.widget-icon{
+  border-radius: 4px;
+}
+.right-widget{
+  display: flex;
+  align-self: last baseline;
+}
+
+/* PROGRESS COMPONENT */
+.progress-main{
+  width: 330px;
+  height: 400px;
+  -webkit-box-shadow: 10px 11px 20px -9px rgba(0,0,0,1);
+  -moz-box-shadow: 10px 11px 20px -9px rgba(0,0,0,1);
+  box-shadow: 10px 11px 20px -9px rgba(0,0,0,1);
+border-radius: 5px;
+background-color: white;
+}
+.progress-title{
+  display: flex;
+  justify-content: center;
+ 
+}
+.progress-h3{
+  font-size: 24px;
+  font-weight:700;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: gray;
+}
+.progress-center{
+  display: flex;
+  justify-content: center;
+}
+.progress-chart{
+  width: 140px;
+ 
+}
+.progress-bottom{
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.progress-footer{
+display: flex;
+justify-content:space-evenly;
+padding-left:10px;
+}
+.progress-no{
+  display: flex;
+  justify-content: space-around;
+}
+.progress-footer-icon{
+  display: flex;
+  justify-content: space-around;
+}
+
+
+/* CHART SCREEN  */
+.chart-title{
+  color: gray;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.chart-main{
+  padding-bottom: 130px;
+}
+
+.transaction-title{
+  display: flex;
+  justify-content: center;
+  color: gray;
+  font-size: 22px;
+  margin-bottom: 25px;
+}
+.transaction-main{
+  padding-bottom: 30px;
+}

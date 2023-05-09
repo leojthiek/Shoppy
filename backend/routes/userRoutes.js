@@ -8,6 +8,7 @@ import {
   deleteUser,
   getUserById,
   updateUser,
+ countUsersToday,
 } from "../controller/userController.js"
 import { protect, admin } from "../middleware/authMiddleware.js"
 const router = express.Router()
@@ -25,5 +26,6 @@ router
   .put(protect,admin, updateUser)
   .get(protect,admin, getUserById)
 
+router.route('/user/count').get(protect,admin,countUsersToday)
 
 export default router

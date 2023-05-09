@@ -76,17 +76,8 @@ export default function Header() {
               )}
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title={"Admin"} id='Admin Menu'>
-                  <LinkContainer to={"/admin/userlist"}>
-                    <NavDropdown.Item>User</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to={"/admin/productlist"}>
-                    <NavDropdown.Item>Products</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to={"/admin/orderlist"}>
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to={"/admin/coupons"}>
-                    <NavDropdown.Item>Coupon</NavDropdown.Item>
+                  <LinkContainer to={"/admin/dashboard"}>
+                    <NavDropdown.Item>Dashboard</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
                 

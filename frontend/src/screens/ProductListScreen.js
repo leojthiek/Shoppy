@@ -12,6 +12,7 @@ import {
   productCreateAction,
 } from "../redux/action/ProductAction"
 import { PRODUCT_CREATE_RESET } from "../redux/constant/productListConstant"
+import AdminSidebar from "../component/adminSidebar"
 
 export default function ProductListScreen() {
   const params = useParams()
@@ -73,6 +74,11 @@ export default function ProductListScreen() {
   }
 
   return (
+    <Row>
+      <Col md={2}>
+        <AdminSidebar/>
+      </Col>
+      <Col md={10}>
     <div className="product-list">
       <Row className='align-items-center'>
         <Col>
@@ -142,5 +148,7 @@ export default function ProductListScreen() {
         </>
       )}
     </div>
+    </Col>
+    </Row>
   )
 }

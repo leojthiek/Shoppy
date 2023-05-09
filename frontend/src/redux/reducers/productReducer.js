@@ -166,3 +166,26 @@ export const productTopRatedReducer = (state = { products: [] }, action) => {
       return state
   }
 }
+
+export const productCategoryReducer = (state = { categories: [] }, action) => {
+  switch (action.type) {
+    case constant.PRODUCT_CATEGORY_REQUEST:
+      return {
+        loading: true,
+        categories: [],
+      }
+    case constant.PRODUCT_CATEGORY_SUCCESS:
+      return {
+        loading: false,
+        categories: action.payload,
+      }
+    case constant.PRODUCT_CATEGORY_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+
+    default:
+      return state
+  }
+}

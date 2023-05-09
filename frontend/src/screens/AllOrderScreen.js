@@ -1,11 +1,12 @@
 import React from "react"
 import { LinkContainer } from "react-router-bootstrap"
-import { Table, Button } from "react-bootstrap"
+import { Table, Button, Col,Row } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import Loader from "../component/loader"
 import Message from "../component/message"
 import { allOrderListAction } from "../redux/action/orderAction"
+import AdminSidebar from "../component/adminSidebar"
 
 export default function AllOrderListScreen() {
   const dispatch = useDispatch()
@@ -28,7 +29,12 @@ export default function AllOrderListScreen() {
   }, [dispatch, navigate, userInfo])
 
   return (
-    <>
+    <Row>
+      <Col md={2}>
+        <AdminSidebar/>
+      </Col>
+      <Col md={10}>
+
     <div className="pt-4">
     <h1 className="orderlist-title">Orders list :</h1>
 
@@ -88,6 +94,7 @@ export default function AllOrderListScreen() {
           </tbody>
         </Table>
       )}
-    </>
+      </Col>
+    </Row>
   )
 }

@@ -194,3 +194,37 @@ export const productTopRatedAction = () => async (dispatch) => {
     })
   }
 }
+
+
+export const productCategoryAction = () => async (dispatch,getState) => {
+  try {
+    dispatch({
+      type: constant.PRODUCT_CATEGORY_REQUEST,
+    })
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+    
+    const { data } = await axios.get('/api/products/product/category',config)
+
+    dispatch({
+      type: constant.PRODUCT_CATEGORY_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: constant.PRODUCT_CATEGORY_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}

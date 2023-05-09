@@ -17,15 +17,13 @@ export default function PlaceOrderScreen() {
 
   const cart = useSelector((state) => state.cart)
 
-  function addDecimal(num) {
-    return (Math.round(num * 100) / 100).toFixed(2)
-  }
+ 
 
   const applyCoupon = useSelector((state) => state.applyCoupon)
   const { loading: loadingCoupon, error: errorCoupon, coupon } = applyCoupon
 
   cart.itemPrice = addDecimal(
-    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    cart.cartItems.reduce((acc, item) => acc + (item.product.offerPrice ? item.product.offerPrice * item.qty : item.price * item.qty), 0)
   )
 
   cart.shippingPrice = addDecimal(cart.itemPrice > 500 ? 0 : 59)
@@ -82,6 +80,9 @@ export default function PlaceOrderScreen() {
     
     }
   }
+  function addDecimal(num) {
+    return Math.round((num * 100) / 100).toFixed(2)
+  }
 
   return (
     <div className='placeorderscreen-main'>
@@ -135,8 +136,8 @@ export default function PlaceOrderScreen() {
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x Rs-{item.price} = Rs-{" "}
-                          {addDecimal(`${item.qty * item.price}`)}
+                          {item.qty} x &#8377;{addDecimal(item.product.offerPrice ? item.product.offerPrice : item.price)}= &#8377;
+                          {addDecimal(item.qty * (item.product.offerPrice ? item.product.offerPrice : item.price))}
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -158,7 +159,7 @@ export default function PlaceOrderScreen() {
               <ListGroup.Item className='placeorderscreen-summary'>
                 <Row>
                   <Col>Items</Col>
-                  <Col>Rs-{cart.itemPrice}</Col>
+                  <Col>&#8377;{addDecimal(cart.itemPrice)}</Col>
                 </Row>
               </ListGroup.Item>
 
@@ -192,7 +193,7 @@ export default function PlaceOrderScreen() {
               <ListGroup.Item className='placeorderscreen-summary'>
                 <Row>
                   <Col>Total</Col>
-                  <Col>Rs-{cart.totalPrice}</Col>
+                  <Col>&#8377;{cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
 

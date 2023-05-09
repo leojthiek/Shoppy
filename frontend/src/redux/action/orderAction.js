@@ -62,7 +62,7 @@ export const orderDetailsAction = (id) => async (dispatch, getState) => {
   }
 }
 
-export const orderToPayAction = (orderId) => async (dispatch, getState) => {
+export const orderToPayAction = (orderId,paymentId) => async (dispatch, getState) => {
   try {
     dispatch({
       type: constant.ORDER_PAY_REQUEST,
@@ -82,7 +82,7 @@ export const orderToPayAction = (orderId) => async (dispatch, getState) => {
     //In this case, the PUT request doesn't require any data to be sent in the request body.
     const { data } = await axios.put(
       `/orders/razorpay/success/${orderId}`,
-      {},
+      {paymentId},
       config
     )
 
@@ -186,6 +186,35 @@ export const orderDeliverAction = (order) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: constant.ORDER_DELIVER_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+
+export const countOrderAction = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: constant.ORDER_COUNT_REQUEST,
+    })
+    const {
+      userLogin: { userInfo },
+    } = getState()
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+    const { data } = await axios.get(`/orders/order/count`, config)
+
+    dispatch({ type: constant.ORDER_COUNT_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: constant.ORDER_COUNT_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

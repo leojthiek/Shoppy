@@ -15,7 +15,7 @@ import { PRODUCT_CREATE_REVIEWS_RESET } from "../redux/constant/productListConst
 export default function ProductScreen() {
   const [mainImage, setMainImage] = React.useState(null)
   const [showAllReviews, setShowAllReviews] = React.useState(false)
-  const [isMobile,setIsMobile]=React.useState(false)
+  const [isMobile, setIsMobile] = React.useState(false)
 
   const [rating, setRating] = React.useState(0)
   const [comment, setComment] = React.useState("")
@@ -36,6 +36,16 @@ export default function ProductScreen() {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
+
+  const getOffer = useSelector((state) => state.getOffer)
+  const { offer } = getOffer
+
+  const discountPercentage = ((product && product.price - product.offerPrice) / product.price) * 100;
+
+
+  function addDecimal(num) {
+    return Math.round((num * 100) / 100).toFixed(2)
+  }
 
   React.useEffect(() => {
     if (successProductReviews) {
@@ -64,7 +74,6 @@ export default function ProductScreen() {
     setShowAllReviews(!showAllReviews)
   }
 
-
   React.useEffect(() => {
     // set mainImage when product is defined
     if (product && product.images) {
@@ -72,11 +81,11 @@ export default function ProductScreen() {
     }
 
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 1399);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+      setIsMobile(window.innerWidth < 1399)
+    }
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
   }, [product])
 
   return (
@@ -97,12 +106,10 @@ export default function ProductScreen() {
                   {...{
                     smallImage: {
                       alt: product.name,
-                      isFluidWidth:isMobile,
+                      isFluidWidth: isMobile,
                       src: mainImage,
                       width: 600,
-                      height:isMobile ? undefined : 400,
-                      
-                      
+                      height: isMobile ? undefined : 400,
                     },
                     largeImage: {
                       src: mainImage,
@@ -145,7 +152,7 @@ export default function ProductScreen() {
               </Row>
             </Col>
 
-            <Col md={3} >
+            <Col md={3}>
               <ListGroup variant='flush'>
                 <ListGroup.Item className='productscreen-details'>
                   <h3>{product.name}</h3>
@@ -156,9 +163,25 @@ export default function ProductScreen() {
                     text={`${product.numReviews} reviews`}
                   />
                 </ListGroup.Item>
-                <ListGroup.Item className='productscreen-details'>
-                  Price: Rs-{product.price}
-                </ListGroup.Item>
+                {product.offerPrice ? (
+                  <div>
+                    {" "}
+                    <ListGroup.Item className='productscreen-details'>
+                      <h4>{discountPercentage.toFixed(0)}% OFF</h4>
+                      
+                      Price: &#8377;{addDecimal(product.offerPrice)}
+                    </ListGroup.Item>
+                    <ListGroup.Item className='productscreen-details'>
+                    <del>MRP &#8377;{product.price}</del>
+
+                    </ListGroup.Item>
+                  </div>
+                ) : (
+                  <ListGroup.Item className='productscreen-details'>
+                    Price: &#8377;{addDecimal(product.price)}
+                  </ListGroup.Item>
+                )}
+
                 <ListGroup.Item className='productscreen-details'>
                   Description: {product.description}
                 </ListGroup.Item>
@@ -172,7 +195,7 @@ export default function ProductScreen() {
                     <Row>
                       <Col>Price :</Col>
                       <Col>
-                        <strong>Rs-{product.price}</strong>
+                       {product.offerPrice ? <strong>&#8377;{addDecimal(product.offerPrice)}</strong>: <strong>&#8377;{product.price}</strong>}
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -208,7 +231,10 @@ export default function ProductScreen() {
                   )}
 
                   {/* display grid to keep the button in block */}
-                  <Link to={`/cart/${params.id}?qty=${qty}`} style={{textDecoration:'none'}}>
+                  <Link
+                    to={`/cart/${params.id}?qty=${qty}`}
+                    style={{ textDecoration: "none" }}
+                  >
                     <ListGroup.Item className='productscreen-summary-btn'>
                       <Button
                         type='button'
@@ -224,7 +250,9 @@ export default function ProductScreen() {
           </Row>
           <Row className='py-4'>
             <Col md={6}>
-              <h2 className="productscreen-review-title">Reviews by customer</h2>
+              <h2 className='productscreen-review-title'>
+                Reviews by customer
+              </h2>
               {product.reviews.length === 0 && <Message>No Reviews</Message>}
               <ListGroup variant='flush'>
                 {product.reviews.slice(0, 3).map((review) => (
@@ -240,7 +268,7 @@ export default function ProductScreen() {
                     {showAllReviews ? "Show less reviews" : "Show all reviews"}
                   </Button>
                 )}
-               
+
                 {showAllReviews &&
                   product.reviews.slice(3).map((review) => (
                     <ListGroup.Item key={review._id}>
@@ -248,15 +276,12 @@ export default function ProductScreen() {
                       <Review value={review.rating} />
                       <p>{review.createdAt?.substring(0, 10)}</p>
                       <p>{review.comment}</p>
-                     
                     </ListGroup.Item>
-                   
                   ))}
-                   <Button variant="link" onClick={toggleShowAllReviews}>
-                      {showAllReviews && 'show less reviews'}
-                    </Button> 
-                  
-                
+                <Button variant='link' onClick={toggleShowAllReviews}>
+                  {showAllReviews && "show less reviews"}
+                </Button>
+
                 <ListGroup.Item>
                   <h2>Write a Review</h2>
                   {errorProductReviews && (
