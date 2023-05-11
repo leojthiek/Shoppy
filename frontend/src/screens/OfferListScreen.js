@@ -7,10 +7,19 @@ import Loader from "../component/loader"
 import Message from "../component/message"
 import { LinkContainer } from "react-router-bootstrap"
 import AdminSidebar from "../component/adminSidebar"
+import { Offcanvas } from "react-bootstrap"
+import { useMediaQuery } from "@mui/material"
 
 export default function OfferListScreen() {
+
+  const [show, setShow] = React.useState(false)
+  const isSmallScreen = useMediaQuery("(max-width:987px)")
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+
 
   const offerList = useSelector((state) => state.offerList)
   const { loading, error, offers } = offerList
@@ -45,9 +54,28 @@ export default function OfferListScreen() {
 
   return (
     <Row>
-      <Col md={2}>
-        <AdminSidebar />
-      </Col>
+       {isSmallScreen ? ( // render offcanvas component only for small screens
+        <div>
+          <Button
+            className='sidebar-menu'
+            variant='primary'
+            onClick={handleShow}
+          >
+            menu
+          </Button>
+
+          <Offcanvas show={show} onHide={handleClose}>
+            <Offcanvas.Header closeButton></Offcanvas.Header>
+            <Offcanvas.Body>
+              <AdminSidebar />
+            </Offcanvas.Body>
+          </Offcanvas>
+        </div>
+      ) : (
+        <Col md={2}>
+          <AdminSidebar />
+        </Col>
+      )}
       <Col md={10}>
         <div className='coupon-main'>
           <Row>

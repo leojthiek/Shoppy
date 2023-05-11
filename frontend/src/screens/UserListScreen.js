@@ -8,10 +8,17 @@ import Loader from "../component/loader"
 import Message from "../component/message"
 import { userListAction, userDeleteAction } from "../redux/action/userAction"
 import AdminSidebar from "../component/adminSidebar"
+import { Offcanvas } from "react-bootstrap"
+import { useMediaQuery } from "@mui/material"
 
 export default function UserListScreen() {
+  const [show, setShow] = React.useState(false)
+  const isSmallScreen = useMediaQuery("(max-width:987px)")
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
 
   const userList = useSelector((state) => state.userList)
   const { users, error, loading } = userList
@@ -39,10 +46,28 @@ export default function UserListScreen() {
   return (
     <>
       <Row>
+      {isSmallScreen ? ( // render offcanvas component only for small screens
+        <div>
+          <Button
+            className='sidebar-menu'
+            variant='primary'
+            onClick={handleShow}
+          >
+            menu
+          </Button>
+
+          <Offcanvas show={show} onHide={handleClose}>
+            <Offcanvas.Header closeButton></Offcanvas.Header>
+            <Offcanvas.Body>
+              <AdminSidebar />
+            </Offcanvas.Body>
+          </Offcanvas>
+        </div>
+      ) : (
         <Col md={2}>
           <AdminSidebar />
         </Col>
-
+      )}
         {loading ? (
           <Loader />
         ) : error ? (
