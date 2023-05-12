@@ -286,18 +286,20 @@ app.get("/api/auth/user", (req, res) => {
 })
 
 
-app.use("/api/products", productRoute)
-app.use("/users", UserRoute)
-app.use("/orders", OrderRoute)
-app.use("/api/cart", CartRoutes)
-app.use("/api", CouponRoute)
-app.use("/api", OfferRoutes)
 
 
 
 const __dirname = path.resolve()
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(path.join(__dirname, '/frontend/build')))
+
+
+app.use("/api/products", productRoute)
+app.use("/users", UserRoute)
+app.use("/orders", OrderRoute)
+app.use("/api/cart", CartRoutes)
+app.use("/api", CouponRoute)
+app.use("/api", OfferRoutes)
 
   app.get('*',(req,res)=>
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
