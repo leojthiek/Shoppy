@@ -2,7 +2,7 @@
   "name": "shoppy",
   "version": "1.0.0",
   "description": "MERN shoppy",
-  "main": "backend/server",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "start": " node backend/server",
