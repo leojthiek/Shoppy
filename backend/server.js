@@ -2,6 +2,7 @@ import express from "express"
 import cloudinary from "cloudinary"
 import shortid from "shortid"
 import Razorpay from "razorpay"
+import path from 'path'
 import passport from "passport"
 import morgan from "morgan"
 import dotenv from "dotenv"
@@ -36,7 +37,7 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-if (process.env.NODE_ENV === "development mode") {
+if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"))
 }
 
@@ -284,9 +285,7 @@ app.get("/api/auth/user", (req, res) => {
   }
 })
 
-app.get("/", (req, res) => {
-  res.send("api called")
-})
+
 app.use("/api/products", productRoute)
 app.use("/users", UserRoute)
 app.use("/orders", OrderRoute)
@@ -296,6 +295,19 @@ app.use("/api", OfferRoutes)
 
 app.use(notFound)
 app.use(errorHandler)
+
+const __dirname = path.resolve()
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static(path.join(__dirname, '/frontend/build')))
+
+  app.get('*',(req,res)=>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  )
+}else{
+  app.get("/", (req, res) => {
+    res.send("api called")
+  })
+}
 
 const PORT = process.env.PORT
 const NODE_ENV = process.env.NODE_ENV
