@@ -293,8 +293,7 @@ app.use("/api/cart", CartRoutes)
 app.use("/api", CouponRoute)
 app.use("/api", OfferRoutes)
 
-// app.use(notFound)
-// app.use(errorHandler)
+
 
 const __dirname = path.resolve()
 if(process.env.NODE_ENV === 'production'){
@@ -308,6 +307,9 @@ if(process.env.NODE_ENV === 'production'){
     res.send("api called")
   })
 }
+
+app.use(notFound)
+app.use(errorHandler)
 
 const PORT = process.env.PORT
 const NODE_ENV = process.env.NODE_ENV

@@ -4,7 +4,6 @@ const notFound = (req, res, next) => {
   next(error)
 }
 
-// i don't exactly know the wat this does but i think i handle this using try catch error
 
 const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode
