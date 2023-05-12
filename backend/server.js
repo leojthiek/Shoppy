@@ -293,8 +293,8 @@ app.use("/api/cart", CartRoutes)
 app.use("/api", CouponRoute)
 app.use("/api", OfferRoutes)
 
-app.use(notFound)
-app.use(errorHandler)
+// app.use(notFound)
+// app.use(errorHandler)
 
 const __dirname = path.resolve()
 if(process.env.NODE_ENV === 'production'){
