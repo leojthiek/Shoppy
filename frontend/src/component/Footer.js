@@ -7,7 +7,7 @@ export default function Footer() {
         <Container>
             <Row>
                 <Col className='text-center py-3'>
-                    Copyright &copy; Leoj Store
+                    Copyright &copy; Leoj Store Official
                 </Col>
             </Row>
         </Container>
