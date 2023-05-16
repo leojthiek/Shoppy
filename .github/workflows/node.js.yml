@@ -22,5 +22,6 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - name: Copy .env file
-      run: cp ${{ github.workspace }}/env-files/.env ${{ github.workspace }}/.env
+      run: cp ~/env-files/.env $HOME/actions-runner/_work/Shoppy/Shoppy/
+
     - run: pm2 restart Shoppy
