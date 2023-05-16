@@ -28,8 +28,12 @@ jobs:
       - name: Build
         run: npm run build --if-present
 
+      - name: Print env-files directory
+        run: ls env-files
+
       - name: Copy .env file
         run: cp env-files/.env actions-runner/_work/Shoppy/Shoppy/.env
+
 
       - name: Restart application
         run: pm2 restart Shoppy
