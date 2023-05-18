@@ -26,6 +26,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run build --if-present
+    
+    - name: Build frontend
+      working-directory: frontend  # Specify the directory where your frontend code is located
+      run: npm run build
     - run: pm2 restart Shoppy
     
