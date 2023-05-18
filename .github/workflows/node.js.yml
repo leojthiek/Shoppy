@@ -26,20 +26,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-<<<<<<< HEAD
-
+    
     - name: Build
       run: |
        cd frontend
        npm install
        npm run build
-=======
-    - name: Build
-    run: |
-      cd frontend
-      npm install
-      npm run build
->>>>>>> d1f36ca (testing)
 
     - run: pm2 restart Shoppy
     
