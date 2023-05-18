@@ -1,9 +1,11 @@
 import React from "react"
 import { Col, Row, Card } from "react-bootstrap"
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline"
-import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn"
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee"
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
+
+
+import { MdAccountBalance } from "react-icons/md"
+import { ImUser } from "react-icons/im"
+import { BsCartCheckFill,BsCurrencyRupee } from "react-icons/bs"
+
 
 export default function Widget({ type ,count}) {
 
@@ -13,7 +15,7 @@ export default function Widget({ type ,count}) {
       data = {
         title: "USERS",
         ismoney: false,
-        icon: <PeopleOutlineIcon className='widget-icon' style={{color:'green',backgroundColor: 'rgb(171, 202, 171)'}}/>,
+        icon: <ImUser className='widget-icon' style={{color:'green',backgroundColor: 'rgb(171, 202, 171)'}}/>,
         link: "See all users",
         count:count
       }
@@ -22,7 +24,7 @@ export default function Widget({ type ,count}) {
       data = {
         title: "ORDERS",
         ismoney: false,
-        icon: <AssignmentTurnedInIcon className='widget-icon' style={{backgroundColor:'rgb(236, 235, 231)',color:'goldenrod'}}  />,
+        icon: <BsCartCheckFill className='widget-icon' style={{backgroundColor:'rgb(236, 235, 231)',color:'goldenrod'}}  />,
         link: "See all orders",
         count:count
       }
@@ -31,7 +33,7 @@ export default function Widget({ type ,count}) {
       data = {
         title: "EARNINGS",
         ismoney: true,
-        icon: <CurrencyRupeeIcon className='widget-icon'style={{ backgroundColor: 'rgb(204, 171, 178)',color:'crimson'}} />,
+        icon: <BsCurrencyRupee className='widget-icon'style={{ backgroundColor: 'rgb(204, 171, 178)',color:'crimson'}} />,
         link: "View all transaction",
         count:count.balance
       }
@@ -40,7 +42,7 @@ export default function Widget({ type ,count}) {
       data = {
         title: "BALANCE",
         ismoney: true,
-        icon: <AccountBalanceWalletIcon className='widget-icon' style={{color:'purple',backgroundColor:'rgb(164, 123, 164)'}} />,
+        icon: <MdAccountBalance className='widget-icon' style={{color:'purple',backgroundColor:'rgb(164, 123, 164)'}} />,
       }
 
       break

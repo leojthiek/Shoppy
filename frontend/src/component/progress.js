@@ -1,7 +1,7 @@
 import React from "react"
 import { CircularProgressbar } from "react-circular-progressbar"
 import "react-circular-progressbar/dist/styles.css"
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
+import {MdKeyboardArrowDown} from 'react-icons/md'
 
 export default function Progress({ type, item }) {
 
@@ -85,13 +85,13 @@ export default function Progress({ type, item }) {
       </div>
       <div className="progress-footer-icon">
       <p>
-        <KeyboardArrowDownIcon />
+        <MdKeyboardArrowDown/>
         </p>
         <p>
-        <KeyboardArrowDownIcon />
+        <MdKeyboardArrowDown />
         </p>
         <p>
-        <KeyboardArrowDownIcon />
+        <MdKeyboardArrowDown />
         </p>
       </div>
      

@@ -33,7 +33,7 @@ export default function HomeScreen() {
   return (
     <div className="py-4">
       {!keyword && <ProductCrousel/>}
-      <h1 className="latest-product-title">Latest Products</h1>
+      <h1 className="latest-product-title">Top Products</h1>
       {loading ? (
         <Loader/>
       ) : error ? (
