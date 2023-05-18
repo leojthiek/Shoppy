@@ -27,8 +27,6 @@ jobs:
         cache: 'npm'
     - run: npm ci
     
-    - name: Build frontend
-      working-directory: frontend  # Specify the directory where your frontend code is located
-      run: npm run build
+    - run: npm run build
     - run: pm2 restart Shoppy
     
