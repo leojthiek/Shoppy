@@ -194,27 +194,42 @@ h2{
 
   /* HEADER SCREEN */
  .custom-header{
-  height: 70px;
-  background-color: rgb(1, 25, 54);
+  background-color: rgb(2, 14, 29);
  }
-  .header-cart-icon {
-    position: relative;
-  }
-  
-  .header-cart-icon .header-cart-no {
+ .header-cart-icon {
+ 
+  position: relative;
+}
+
+.header-cart-no {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+@media (max-width: 763px) {
+
+  .header-cart-no {
     position: absolute;
-    top: -10px;
-    right: -10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20px;
-    height: 20px;
-    background-color: red;
-    color: white;
-    font-size: 12px;
-    border-radius: 50%;
+    top: 0;
+    left: -1rem;
+    transform: translate(100%, -50%);
   }
+}
+
+
+
+
+
   .header-logo{
     width: 35px;
     height: 35px;
@@ -364,6 +379,8 @@ h2{
   height: 60px;
   padding-bottom: 10px;
 }
+
+
 .productscreen-review-title{
   background-color: #c82333 ;
   color: white;

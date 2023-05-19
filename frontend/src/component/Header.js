@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { logout } from "../redux/action/userAction"
 import SearchBox from "./SearchBox"
-import {getCartItem} from '../redux/action/cartAction'
+import { getCartItem } from "../redux/action/cartAction"
 
 export default function Header() {
   const dispatch = useDispatch()
@@ -18,28 +18,35 @@ export default function Header() {
     navigate("/login")
   }
 
-
-// using baseUrl because image logo got broken on admin page
-  const BaseUrl=window.location.origin
+  // using baseUrl because image logo got broken on admin page
+  const BaseUrl = window.location.origin
 
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     dispatch(getCartItem())
-  },[dispatch])
+  }, [dispatch])
 
   return (
     <header>
-      <Navbar variant='dark' expand='lg' collapseOnSelect className="custom-header">
+      <Navbar
+        variant='dark'
+        expand='md'
+        collapseOnSelect
+        className='custom-header'
+      >
         <Container>
-          <div className="header-title-logo">
-            <Image className="header-logo" src={`${BaseUrl}/images/logo.png`} alt="logo"></Image>
-          <LinkContainer to='/'>
-            <Navbar.Brand className="header-title">STORE</Navbar.Brand>
-          </LinkContainer>
+          <div className='header-title-logo'>
+            <Image
+              className='header-logo'
+              src={`${BaseUrl}/images/logo.png`}
+              alt='logo'
+            ></Image>
+            <LinkContainer to='/'>
+              <Navbar.Brand className='header-title'>STORE</Navbar.Brand>
+            </LinkContainer>
           </div>
-         
 
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
@@ -51,10 +58,11 @@ export default function Header() {
                   <div className='header-cart-icon'>
                     <i className='fas fa-shopping-cart'></i>
                     <span className='header-cart-no'>
-                      {userInfo ? cartItems.reduce((acc, item) => acc + item.qty, 0):0}
+                      {userInfo
+                        ? cartItems.reduce((acc, item) => acc + item.qty, 0)
+                        : 0}
                     </span>
                   </div>
-                
                 </Nav.Link>
               </LinkContainer>
 
@@ -80,7 +88,6 @@ export default function Header() {
                     <NavDropdown.Item>Dashboard</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
-                
               )}
             </Nav>
           </Navbar.Collapse>

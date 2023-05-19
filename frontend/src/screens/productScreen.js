@@ -40,7 +40,7 @@ export default function ProductScreen() {
   const getOffer = useSelector((state) => state.getOffer)
   const { offer } = getOffer
 
-  const discountPercentage = ((product && product.price - product.offerPrice) / product.price) * 100;
+  const discountPercentage = ((product && product.price && product.price - product.offerPrice) / product.price) * 100;
 
 
   function addDecimal(num) {
@@ -106,7 +106,7 @@ export default function ProductScreen() {
                   {...{
                     smallImage: {
                       alt: product.name,
-                      isFluidWidth: isMobile,
+                      isFluidWidth:isMobile,
                       src: mainImage,
                       width: 600,
                       height: isMobile ? undefined : 400,
@@ -133,7 +133,7 @@ export default function ProductScreen() {
 
               <Row
                 className='mt-4'
-                style={{ display: "flex", justifyContent: "center" }}
+                style={{ display: "flex", justifyContent: "center"}}
               >
                 {product.images &&
                   product.images.map((image, index) => (
